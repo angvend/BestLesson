@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "915777919034",
+    "firebase_url": "https://bestlesson-59d8a.firebaseio.com",
+    "project_id": "bestlesson-59d8a",
+    "storage_bucket": "bestlesson-59d8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915777919034:android:2b2d57bd62603dd275bd03",
+        "android_client_info": {
+          "package_name": "com.example.angela.bestlesson"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915777919034-69bmh636eh9koh81gql1gkf5gv74o8fo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvlksmC1HcQw9SCin68ovCvOxQ84Uc21M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915777919034-69bmh636eh9koh81gql1gkf5gv74o8fo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
