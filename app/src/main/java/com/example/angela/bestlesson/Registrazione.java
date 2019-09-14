@@ -72,7 +72,7 @@ public class Registrazione extends AppCompatActivity {
 
                                     if (task.isSuccessful()) {
 
-                                        startActivity(new Intent(getApplicationContext(),Registrazione.class));
+                                        startActivity(new Intent(getApplicationContext(),Home.class));
                                         Toast.makeText(Registrazione.this, "Registrazione completata", Toast.LENGTH_SHORT);
 
                                     } else {
