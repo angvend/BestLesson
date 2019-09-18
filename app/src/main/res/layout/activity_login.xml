@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,92 +11,95 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#DC008577"
+        android:orientation="vertical">
 
-        <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/book" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="BestLesson"
+            android:textColor="#FFF"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
 
         <LinearLayout
-            android:layout_marginTop="200dp"
             android:id="@+id/layoutInput"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/background_white"
-            android:padding="20dp"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/background_white"
+            android:orientation="vertical"
+            android:padding="20dp">
 
             <TextView
-                android:layout_marginTop="5dp"
-                android:text="email"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="email" />
+
             <EditText
                 android:id="@+id/email"
-                android:padding="10dp"
-                android:drawableRight="@drawable/ic_person"
-                android:hint="anna.valli@gmail.com"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_person"
+                android:text="2110luca1@gmail.com"
+                android:inputType="textEmailAddress"
+                android:padding="10dp" />
+
             <TextView
-                android:layout_marginTop="5dp"
-                android:text="password"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="password" />
+
             <EditText
                 android:id="@+id/password"
-                android:padding="10dp"
-                android:drawableRight="@drawable/ic_vpn_key_black_24dp"
-                android:hint="******"
-                android:inputType="textPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_vpn_key_black_24dp"
+                android:text="12345678"
+                android:inputType="textPassword"
+                android:padding="10dp" />
+
 
         </LinearLayout>
 
         <Button
-                android:id="@+id/btn_login"
-                android:textColor="#FFF"
-                android:background="@drawable/rec_gradient"
-                android:layout_marginTop="400dp"
-                android:textAllCaps="false"
-                android:text="ACCEDI"
-                android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            android:id="@+id/btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/orange_button"
+            android:text="ACCEDI"
+            android:textAllCaps="false"
+            android:textColor="#FFF" />
+
         <Button
             android:id="@+id/btn_registra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registrati"
-            android:layout_marginTop="450dp"
-            android:layout_centerHorizontal="true"/>
-
-        <ImageView
-            android:id="@+id/imageVIew"
+            android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="5dp"
-            android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_launcher"
-            android:background="@drawable/background_white"
-            android:padding="5dp"
-            android:layout_width="70dp"
-            android:layout_height="70dp" />
+            android:background="@drawable/silver_button"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Registrati" />
 
-        <TextView
-            android:textSize="20sp"
-            android:textColor="#FFF"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/imageVIew"
-            android:text="BestLesson"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        </RelativeLayout>
     </LinearLayout>
 </ScrollView>
 
