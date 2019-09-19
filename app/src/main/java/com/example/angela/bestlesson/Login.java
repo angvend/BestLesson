@@ -31,7 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Login extends AppCompatActivity {
 
     private EditText emailTV, passwordTV;
-    private Button loginBtn, registraBtn;
+    private Button loginBtn, registraBtn, passwordDimenticataBtn;
     private ProgressBar progressBar;
 
     private Integer tipo = 0;
@@ -71,6 +71,14 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Login.this, Registrazione.class);
+                startActivity(intent);
+            }
+        });
+
+        passwordDimenticataBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, RecuperaPassword.class);
                 startActivity(intent);
             }
         });
@@ -121,25 +129,11 @@ public class Login extends AppCompatActivity {
 
         loginBtn = findViewById(R.id.btn_login);
         registraBtn = findViewById(R.id.btn_registra);
+        passwordDimenticataBtn = findViewById(R.id.btn_password_dimenticata);
         //progressBar = findViewById(R.id.progressBar);
     }
 
     private void switcha(){
-
-        mAuthListener = new FirebaseAuth.AuthStateListener(){
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
-                user = firebaseAuth.getCurrentUser();
-
-                if (user != null) {
-                    Toast.makeText(getApplicationContext(), "Accesso effettuato con " + user.getEmail(), Toast.LENGTH_LONG).show();
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "Aaaaaaa", Toast.LENGTH_LONG).show();
-                }
-            }
-        };
 
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -149,14 +143,10 @@ public class Login extends AppCompatActivity {
                     Integer studente = 2;
                     Integer insegnante = 1;
 
-                    Log.d("PUPU", userID);
 
                     Integer type = getTipo(dataSnapshot,userID);
 
                     if(type == insegnante){
-
-
-                        Log.d("PUPU", "INSEGNANTE");
 
                         Intent intent = new Intent(Login.this, OrganizzaCalendario.class);
                         startActivity(intent);
@@ -164,9 +154,6 @@ public class Login extends AppCompatActivity {
                     }
 
                     if(type == studente){
-
-
-                        Log.d("PUPU", "STUDENTE");
 
                         Intent intent = new Intent(Login.this, VisualizzaCalendario.class);
                         startActivity(intent);
@@ -186,11 +173,7 @@ public class Login extends AppCompatActivity {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             userInformation.setTipo(Integer.parseInt(ds.child(userId).child("tipo").getValue().toString()));
             tipo = userInformation.getTipo();
-            Log.d("PUPU", tipo.toString());
         }
         return tipo;
     }
-
-
-
 }

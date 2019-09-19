@@ -20,6 +20,7 @@
         <activity android:name=".Registrazione"></activity>
         <activity android:name=".OrganizzaCalendario"></activity>
         <activity android:name=".VisualizzaCalendario"></activity>
+        <activity android:name=".RecuperaPassword"></activity>
     </application>
 
 </manifest>
