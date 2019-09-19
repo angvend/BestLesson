@@ -34,12 +34,9 @@ public class Login extends AppCompatActivity {
     private Button loginBtn, registraBtn;
     private ProgressBar progressBar;
 
-    private boolean taskSuccess;
-
     private Integer tipo = 0;
     private DatabaseReference myRef;
     private FirebaseDatabase mFirebaseDatabase;
-    private String uid;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private FirebaseUser user;
@@ -47,6 +44,7 @@ public class Login extends AppCompatActivity {
     private UserInformation userInformation;
 
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,12 +58,12 @@ public class Login extends AppCompatActivity {
 
         userInformation = new UserInformation();
 
+        progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loginUserAccount();
-                switcha(mAuth);
-
             }
         });
 
@@ -81,7 +79,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void loginUserAccount() {
-        //progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
 
         final String email, password;
         email = emailTV.getText().toString();
@@ -102,11 +100,10 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            Intent intent = new Intent(Login.this, Home.class);
-                            startActivity(intent);
-
                             Toast.makeText(getApplicationContext(), "Login effettuato!", Toast.LENGTH_LONG).show();
                             // progressBar.setVisibility(View.GONE);
+
+                            switcha();
                         }
                         else {
                             Toast.makeText(getApplicationContext(), "Login fallito! Per favore riprova", Toast.LENGTH_LONG).show();
@@ -127,7 +124,7 @@ public class Login extends AppCompatActivity {
         //progressBar = findViewById(R.id.progressBar);
     }
 
-    private void switcha(final FirebaseAuth firebaseAuth){
+    private void switcha(){
 
         mAuthListener = new FirebaseAuth.AuthStateListener(){
             @Override
@@ -147,8 +144,34 @@ public class Login extends AppCompatActivity {
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    user = firebaseAuth.getCurrentUser();
-                    String email = user.getEmail();
+                    String userID = mAuth.getCurrentUser().getUid();
+
+                    Integer studente = 2;
+                    Integer insegnante = 1;
+
+                    Log.d("PUPU", userID);
+
+                    Integer type = getTipo(dataSnapshot,userID);
+
+                    if(type == insegnante){
+
+
+                        Log.d("PUPU", "INSEGNANTE");
+
+                        Intent intent = new Intent(Login.this, OrganizzaCalendario.class);
+                        startActivity(intent);
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
+
+                    if(type == studente){
+
+
+                        Log.d("PUPU", "STUDENTE");
+
+                        Intent intent = new Intent(Login.this, VisualizzaCalendario.class);
+                        startActivity(intent);
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
 
                 }
 
@@ -158,6 +181,16 @@ public class Login extends AppCompatActivity {
                 }
             });
         }
+
+    private Integer getTipo(DataSnapshot dataSnapshot, String userId) {
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
+            userInformation.setTipo(Integer.parseInt(ds.child(userId).child("tipo").getValue().toString()));
+            tipo = userInformation.getTipo();
+            Log.d("PUPU", tipo.toString());
+        }
+        return tipo;
+    }
+
 
 
 }

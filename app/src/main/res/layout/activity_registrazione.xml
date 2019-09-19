@@ -123,13 +123,6 @@
                     android:inputType="textPassword"
                     android:padding="10dp" />
 
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -156,7 +149,14 @@
                     android:text="Registrati"
                     android:textColor="@android:color/white"
                     android:textStyle="bold" />
-                    />
+
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="gone" />
 
 
             </LinearLayout>

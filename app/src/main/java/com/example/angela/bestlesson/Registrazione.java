@@ -121,7 +121,7 @@ public class Registrazione extends AppCompatActivity implements AdapterView.OnIt
                 progressBar.setVisibility(View.VISIBLE);
 
                 if (password.equals(confirmPassword)){
-                    firebaseAuth .createUserWithEmailAndPassword(email, password)
+                    firebaseAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(Registrazione.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -140,9 +140,11 @@ public class Registrazione extends AppCompatActivity implements AdapterView.OnIt
 
                                         }
 
-                                        listaUtenti.push().setValue(utente);
+                                        FirebaseDatabase.getInstance().getReference("utenti")
+                                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                .setValue(utente);
 
-                                        startActivity(new Intent(getApplicationContext(),Home.class));
+                                        startActivity(new Intent(getApplicationContext(), Login.class));
                                         Toast.makeText(Registrazione.this, "Registrazione completata", Toast.LENGTH_SHORT);
 
                                     } else {
