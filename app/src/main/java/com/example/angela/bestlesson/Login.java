@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -138,6 +137,7 @@ public class Login extends AppCompatActivity {
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                     String userID = mAuth.getCurrentUser().getUid();
 
                     Integer studente = 2;
@@ -148,14 +148,14 @@ public class Login extends AppCompatActivity {
 
                     if(type == insegnante){
 
-                        Intent intent = new Intent(Login.this, OrganizzaCalendario.class);
+                        Intent intent = new Intent(Login.this, BasicActivity.class);
                         startActivity(intent);
                         progressBar.setVisibility(View.INVISIBLE);
                     }
 
                     if(type == studente){
 
-                        Intent intent = new Intent(Login.this, VisualizzaCalendario.class);
+                        Intent intent = new Intent(Login.this, BasicActivity.class);
                         startActivity(intent);
                         progressBar.setVisibility(View.INVISIBLE);
                     }
@@ -173,6 +173,7 @@ public class Login extends AppCompatActivity {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             userInformation.setTipo(Integer.parseInt(ds.child(userId).child("tipo").getValue().toString()));
             tipo = userInformation.getTipo();
+
         }
         return tipo;
     }
