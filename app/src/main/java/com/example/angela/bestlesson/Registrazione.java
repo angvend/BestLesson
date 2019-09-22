@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.reflect.Array;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -144,12 +146,19 @@ public class Registrazione extends AppCompatActivity implements AdapterView.OnIt
                                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                 .setValue(utente);
 
+
+                                        if(utente.getTipo() == 1){
+                                            FirebaseDatabase.getInstance().getReference("utenti")
+                                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("studenti").push().setValue("");
+
+                                        }
+
                                         startActivity(new Intent(getApplicationContext(), Login.class));
                                         Toast.makeText(Registrazione.this, "Registrazione completata", Toast.LENGTH_SHORT);
 
                                     } else {
 
-                                        Toast.makeText(Registrazione.this, "Email già presente in database!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Registrazione.this, "Registrazione non completata!", Toast.LENGTH_SHORT).show();
                                     }
 
                                     // ...

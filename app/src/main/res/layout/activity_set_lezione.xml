@@ -8,8 +8,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#DC008577">
+        android:orientation="vertical">
 
 
         <LinearLayout
@@ -23,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:text="Lezione delle ore:"
                 android:textColor="#ffffff"
                 android:textSize="20dp"
@@ -48,28 +47,74 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/background_white"
                 android:orientation="vertical"
                 android:padding="20dp">
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Nome Studente" />
 
-                <EditText
-                    android:id="@+id/nomeStudente"
+
+                <TextView
+                    android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Nome:" />
+
+                <EditText
+                    android:id="@+id/txtNome1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:drawableRight="@drawable/ic_person"
-                    android:hint="Nicolò"
+                    android:hint="Inserisci il nome"
                     android:inputType="textCapWords"
-                    android:padding="10dp"
-                    android:layout_marginBottom="30dp"/>
+                    android:padding="10dp" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Cognome:" />
+
+                <EditText
+                    android:id="@+id/txtCognome1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableRight="@drawable/ic_person"
+                    android:hint="Inserisci il cognome"
+                    android:inputType="textCapWords"
+                    android:padding="10dp" />
+
+                <Button
+                    android:id="@+id/btn_conferma"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/green_button"
+                    android:layout_marginTop="15dp"
+                    android:text="Cerca"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textViewStudenti"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="I tuoi studenti:" />
+
+                <ListView
+                    android:text="bye"
+                    android:id="@+id/list_view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:background="@android:color/white"
+                    >
+                </ListView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -114,7 +159,6 @@
                         android:layout_height="150dp"
                         android:timePickerMode="spinner"/>
 
-
                 </LinearLayout>
 
 
@@ -137,7 +181,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/orange_button"
-                android:text="INVIA"
+                android:text="IMPOSTA"
                 android:textAllCaps="false"
                 android:textColor="#FFF" />
 

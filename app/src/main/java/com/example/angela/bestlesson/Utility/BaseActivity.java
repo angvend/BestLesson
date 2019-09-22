@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.example.angela.bestlesson.BasicActivity;
 import com.example.angela.bestlesson.R;
-import com.example.angela.bestlesson.Ricerca;
+import com.example.angela.bestlesson.Rubrica;
 import com.example.angela.bestlesson.SetLezione;
 import com.google.android.material.navigation.NavigationView;
 
@@ -44,6 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
 
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,28 +66,27 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
 
 
-
-
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
 
-                if(id == R.id.nav_home){
-                    Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT ).show();
+                switch (id){
 
+                    case R.id.nav_home:
+                        Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT ).show();
 
-                }
-                else if (id == R.id.nav_calendario){
-                    Toast.makeText(getApplicationContext(), "Calendario", Toast.LENGTH_SHORT ).show();
-                    Intent intent = new Intent(getApplicationContext(), BasicActivity.class);
-                    startActivity(intent);
+                        intent = new Intent(getApplicationContext(), BasicActivity.class);
+                        startActivity(intent);
 
-                }
-                else if (id == R.id.nav_rubrica){
-                    Toast.makeText(getApplicationContext(), "Rubrica", Toast.LENGTH_SHORT ).show();
-                    Intent intent = new Intent(getApplicationContext(), Ricerca.class);
-                    startActivity(intent);
+                        break;
 
+                    case R.id.nav_rubrica:
+                        Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT ).show();
+
+                        intent = new Intent(getApplicationContext(), Rubrica.class);
+                        startActivity(intent);
+
+                        break;
                 }
 
                 return true;
@@ -251,9 +251,6 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
     public WeekView getWeekView() {
         return mWeekView;
     }
-
-
-
 }
 
 

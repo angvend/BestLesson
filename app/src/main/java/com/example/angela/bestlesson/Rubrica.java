@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class Ricerca extends Activity {
+public class Rubrica extends Activity {
 
 
     FirebaseAuth mAuth;
@@ -55,22 +55,24 @@ public class Ricerca extends Activity {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
 
+        utente = new Utente();
 
-        setContentView(R.layout.activity_ricerca);
+        setContentView(R.layout.activity_rubrica);
 
 
         txtNome = (EditText) findViewById(R.id.txtNome);
         txtCognome = (EditText) findViewById(R.id.txtCognome);
-        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        linearLayout = (LinearLayout) findViewById(R.id.linearLayout1);
 
         listView = (ListView) findViewById(R.id.list_view);
         email = (TextView) findViewById(R.id.email);
 
         aggiungi = (Button) findViewById(R.id.aggiungi);
-        final ArrayList<String> arrayListEdit = new ArrayList<>();
-        final ArrayList<String> listaStudenti = new ArrayList<>();
 
-        final ArrayList<String> studenti = new ArrayList<>();
+
+        final ArrayList<String> arrayListEdit = new ArrayList<>();
+        final ArrayList<Utente> listaStudenti = new ArrayList<>();
+        final ArrayList<Utente> studentiSelezionati = new ArrayList<>();
         final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayListEdit);
 
 
@@ -80,6 +82,13 @@ public class Ricerca extends Activity {
 
             @Override
             public void onClick(View v) {
+
+
+                listView.setAdapter(null); //cancello le righe
+                arrayListEdit.clear();     //cancello l'array temporaneo per stampare a video
+                arrayAdapter.clear();
+                listaStudenti.clear();
+
                 DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference utentiRef = rootRef.child("utenti");
                 ValueEventListener eventListener = new ValueEventListener() {
@@ -88,15 +97,9 @@ public class Ricerca extends Activity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String userID = mAuth.getCurrentUser().getUid();
 
+                        String nome, cognome, email, tipo2, idStudente;
 
-
-                        //Integer type = getTipo(dataSnapshot,userID);
-
-
-                        String cognome, nome, email, tipo2;
                         Boolean flag = false;
-
-                        String cognomeOK = null, nomeOK = null, emailOK = null;
 
 
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -104,23 +107,36 @@ public class Ricerca extends Activity {
                             nome = ds.child("nome").getValue(String.class);
                             tipo2 = ds.child("tipo").getValue().toString();
                             email = ds.child("email").getValue(String.class);
+                            //idStudente = ds.getKey();
 
-                           // if (type == 1) {
-                                //  System.out.println(getTipo(dataSnapshot, userID));
-                                if ((cognome.equalsIgnoreCase(txtCognome.getText().toString())) == true && tipo2.equals(("2"))) {
-                                    if ((nome.equalsIgnoreCase(txtNome.getText().toString())) == true) {
+                            // if (type == 1) {
+                            //  System.out.println(getTipo(dataSnapshot, userID));
+                            if (cognome.equalsIgnoreCase(txtCognome.getText().toString()) == true || (nome.equalsIgnoreCase(txtNome.getText().toString())) == true) {
+                                if (tipo2.equals(("2"))) {
 
-                                        flag = true;
-                                        System.out.println(tipo2);
-                                        cognomeOK = cognome;
-                                        nomeOK = nome;
-                                        emailOK = email;
-                                    }
+                                    utente.setNome(nome);
+                                    utente.setCognome(cognome);
+                                    utente.setEmail(email);
+                                    utente.setTipo(Integer.parseInt(tipo2));
+
+                                    arrayListEdit.add(email);
+
+                                    listaStudenti.add(utente); //lista degli studenti
+
+                                    listView.setAdapter(arrayAdapter);
+
+                                    System.out.println(listaStudenti);
+
+                                    flag = true;
+
                                 }
-                                if ((cognome.equalsIgnoreCase(txtCognome.getText().toString())) == false) {
-                                }
-                                if ((nome.equalsIgnoreCase(txtNome.getText().toString())) == false) {
-                                }
+                            }
+
+                            if(flag=false){
+
+                                Toast.makeText(getApplicationContext(), "Studente non trovato in database!", Toast.LENGTH_SHORT ).show();
+                            }
+                        }
                             //}
 
 //
@@ -141,25 +157,6 @@ public class Ricerca extends Activity {
 
 
                         }
-                        if (flag == true) {
-
-                            listView.setAdapter(null); //cancello le righe
-                            arrayListEdit.clear();     //cancello l'array temporaneo per stampare a video
-                            arrayListEdit.add(emailOK);
-
-                            listaStudenti.add(emailOK); //lista degli studenti
-
-
-                            listView.setAdapter(arrayAdapter);
-
-                            System.out.println(listaStudenti);
-
-                        } else {
-
-                            Toast.makeText(getApplicationContext(), "Studente non presente", Toast.LENGTH_LONG).show();
-                            listView.setAdapter(null);
-                        }
-                    }
 
 
                     @Override
@@ -178,20 +175,29 @@ public class Ricerca extends Activity {
                     view.setBackgroundColor(Color.CYAN);
                     flagColor = true;
                     view.setSelected(true);
-
-                    aggiungi.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            //AGGIUNGERE QUI ARRAY STUDENTI/DOCENTI
-                        }
-                    });
+                    studentiSelezionati.add(listaStudenti.get(position));
+                    Log.d("FRANCO", studentiSelezionati.toString());
 
                 } else {
                     view.setSelected(false);
                     flagColor = false;
                     view.setBackgroundColor(Color.TRANSPARENT);
+                    studentiSelezionati.remove(listaStudenti.get(position));
+                    Log.d("FRANCO", studentiSelezionati.toString());
                 }
+            }
+        });
+
+        aggiungi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                for(int i=0; i<studentiSelezionati.size(); i++){
+
+                    FirebaseDatabase.getInstance().getReference("utenti")
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("studenti").push().setValue(studentiSelezionati.get(i));
+                }
+
             }
         });
     }
@@ -201,7 +207,6 @@ public class Ricerca extends Activity {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             userInformation.setTipo(Integer.parseInt(ds.child(userId).child("tipo").getValue().toString()));
             tipo = userInformation.getTipo();
-            Log.d("PUPU", tipo.toString());
         }
         return tipo;
 }

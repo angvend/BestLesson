@@ -14,8 +14,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
 
         <LinearLayout
@@ -86,13 +85,12 @@
                 <Button
                     android:id="@+id/btn_conferma"
                     style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="70dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="70dp"
                     android:background="@drawable/green_button"
+                    android:layout_marginTop="15dp"
                     android:text="Cerca"
+                    android:layout_gravity="center"
                     android:textColor="@android:color/white"
                     android:textStyle="bold" />
 
@@ -108,38 +106,44 @@
 
 
             </LinearLayout>
+
             <LinearLayout
-                android:id="@+id/linearLayout"
+
+                android:id="@+id/linearLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/background_white"
                 android:orientation="vertical"
-                android:clickable="true"
-                android:padding="20dp">
+                android:padding="20dp"
+                android:clickable="true">
 
-                    <ListView
-                        android:text="bye"
-                        android:id="@+id/list_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:background="@android:color/white"
-                        >
 
-                    </ListView>
+
+                <ListView
+                    android:text="bye"
+                    android:id="@+id/list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@android:color/white"
+                    >
+                </ListView>
+
                 <Button
                     android:id="@+id/aggiungi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="aggiungi"
+                    android:textColor="#FFF"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/orange_button"
-
                     android:layout_gravity="center"/>
 
 
             </LinearLayout>
-
-        </LinearLayout>
-
+    </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
