@@ -2,21 +2,16 @@ package com.example.angela.bestlesson.Utility;
 
 import android.content.Intent;
 import android.graphics.RectF;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.angela.bestlesson.BasicActivity;
-import com.example.angela.bestlesson.Home;
-import com.example.angela.bestlesson.Login;
 import com.example.angela.bestlesson.R;
 import com.example.angela.bestlesson.Ricerca;
 import com.example.angela.bestlesson.SetLezione;
-import com.example.angela.bestlesson.ui.slideshow.SlideshowFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.text.SimpleDateFormat;
@@ -24,16 +19,11 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 /**
  * This is a base activity which contains week view and all the codes necessary to initialize the
@@ -54,10 +44,12 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -73,6 +65,8 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
 
 
+
+
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
@@ -80,11 +74,19 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
                 if(id == R.id.nav_home){
                     Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT ).show();
 
+
+                }
+                else if (id == R.id.nav_calendario){
+                    Toast.makeText(getApplicationContext(), "Calendario", Toast.LENGTH_SHORT ).show();
+                    Intent intent = new Intent(getApplicationContext(), BasicActivity.class);
+                    startActivity(intent);
+
+                }
+                else if (id == R.id.nav_rubrica){
+                    Toast.makeText(getApplicationContext(), "Rubrica", Toast.LENGTH_SHORT ).show();
                     Intent intent = new Intent(getApplicationContext(), Ricerca.class);
                     startActivity(intent);
-                }
-                else if (id == R.id.nav_gallery){
-                    Toast.makeText(getApplicationContext(), "Calendario", Toast.LENGTH_SHORT ).show();
+
                 }
 
                 return true;
@@ -137,7 +139,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_calendar, menu);
         return true;
     }
 
@@ -249,6 +251,9 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
     public WeekView getWeekView() {
         return mWeekView;
     }
+
+
+
 }
 
 
