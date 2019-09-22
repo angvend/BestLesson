@@ -6,7 +6,6 @@
         android:allowBackup="true"
         android:icon="@drawable/book"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:label="BestLesson"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Login"
