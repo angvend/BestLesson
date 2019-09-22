@@ -1,150 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_set_lezione"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#DC008577">
 
-
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-
-        <TextView
-            android:id="@+id/lezione"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            android:text="Lezione delle ore:"
-            android:textColor="#ffffff"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text=""
-            android:textSize="30dp"
-            android:textColor="#ffffff"
-            android:textStyle="bold" />
-
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#DC008577">
 
 
         <LinearLayout
-            android:id="@+id/layoutInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/background_white"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:orientation="vertical">
 
 
             <TextView
+                android:id="@+id/lezione"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Nome Studente" />
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:text="Lezione delle ore:"
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/nomeStudente"
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=""
+                android:textSize="30dp"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableRight="@drawable/ic_person"
-                android:hint="Nicolò"
-                android:inputType="textCapWords"
-                android:padding="10dp"
-                android:layout_marginBottom="30dp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/background_white"
+                android:orientation="vertical"
+                android:padding="20dp">
 
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Inizio lezione:" />
+                    android:text="Nome Studente" />
 
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:textAlignment="center"
+                <EditText
+                    android:id="@+id/nomeStudente"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Fine lezione:" />
+                    android:drawableRight="@drawable/ic_person"
+                    android:hint="Nicolò"
+                    android:inputType="textCapWords"
+                    android:padding="10dp"
+                    android:layout_marginBottom="30dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:textAlignment="center"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Inizio lezione:" />
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:textAlignment="center"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Fine lezione:" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TimePicker
+                        android:id="@+id/datePicker1"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_height="150dp"
+                        android:timePickerMode="spinner" />
+
+                    <TimePicker
+                        android:id="@+id/datePicker2"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_height="150dp"
+                        android:timePickerMode="spinner"/>
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutClocks"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TimePicker
-                    android:id="@+id/datePicker1"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="150dp"
-                    android:timePickerMode="spinner" />
-
-                <TimePicker
-                    android:id="@+id/datePicker2"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_height="150dp"
-                    android:timePickerMode="spinner"/>
-
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/btn_imposta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/orange_button"
+                android:text="INVIA"
+                android:textAllCaps="false"
+                android:textColor="#FFF" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layoutClocks"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:orientation="vertical">
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_imposta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/orange_button"
-            android:text="INVIA"
-            android:textAllCaps="false"
-            android:textColor="#FFF" />
-
-        <ProgressBar
-            android:id="@+id/progressBar2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:visibility="gone"
-            android:layout_marginTop="25dp"
-            android:indeterminateTint="@android:color/white"/>
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:layout_marginTop="25dp"
+                android:indeterminateTint="@android:color/white"/>
 
 
 
-</LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
