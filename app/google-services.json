@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "915777919034-9sr196ujf7r1s9oqnseu4ccla0drkn69.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.angela.bestlesson",
+            "certificate_hash": "5cb3f2c344da6c930708550ffa1cad94b3daa95c"
+          }
+        },
+        {
+          "client_id": "915777919034-jmqo16cne4ndpsk89itc4osuvbild0ia.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.angela.bestlesson",
+            "certificate_hash": "f4bf9dbfa184b999473900a393a17815dd8a7e51"
+          }
+        },
+        {
           "client_id": "915777919034-69bmh636eh9koh81gql1gkf5gv74o8fo.apps.googleusercontent.com",
           "client_type": 3
         }
