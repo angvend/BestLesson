@@ -162,8 +162,14 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
     public void onEmptyViewLongPress(Calendar time) {
         Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(BaseActivity.this, SetLezione.class);
-        intent.putExtra("TIME", time);
+        String oraCliccata = String.valueOf(getOra(time));
+        intent.putExtra("passaggioTempo", oraCliccata);
         startActivity(intent);
+    }
+
+    private int getOra(Calendar time){
+        int ora = time.get(Calendar.HOUR_OF_DAY);
+        return ora;
     }
 
     public WeekView getWeekView() {

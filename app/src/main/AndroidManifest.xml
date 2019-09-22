@@ -23,8 +23,9 @@
         <activity android:name=".VisualizzaCalendario"></activity>
         <activity android:name=".RecuperaPassword"></activity>
         <activity android:name=".BasicActivity"></activity>
+        <activity android:name=".SetLezione"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity android:name=".Utility.BaseActivity"></activity>
-        <activity android:name=".SetLezione"></activity>
     </application>
 
 </manifest>

@@ -19,6 +19,11 @@ public class BasicActivity extends BaseActivity {
         // Populate the week view with some events.
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
 
+        //FOR SU LEZIONI IN DATABASE
+        //PRENDO DINAMICAMENTE OGNI TIME SETTATO DALL'INSEGNANTE E LO SOSTITUISCO AL POSTO DI START TIME
+
+        //ORA, STUDENTE, INSEGNANTE
+
         Calendar startTime = Calendar.getInstance();
         startTime.set(Calendar.HOUR_OF_DAY, 3);
         startTime.set(Calendar.MINUTE, 0);
