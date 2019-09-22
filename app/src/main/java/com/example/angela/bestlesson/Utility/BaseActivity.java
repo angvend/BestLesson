@@ -1,13 +1,18 @@
 package com.example.angela.bestlesson.Utility;
 
+import android.content.Intent;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.angela.bestlesson.Home;
+import com.example.angela.bestlesson.Login;
 import com.example.angela.bestlesson.R;
+import com.example.angela.bestlesson.SetLezione;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -156,6 +161,9 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
     @Override
     public void onEmptyViewLongPress(Calendar time) {
         Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(BaseActivity.this, SetLezione.class);
+        intent.putExtra("TIME", time);
+        startActivity(intent);
     }
 
     public WeekView getWeekView() {

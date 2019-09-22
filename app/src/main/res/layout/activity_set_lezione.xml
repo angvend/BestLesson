@@ -4,13 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:ignore="MissingDefaultResource">
+    android:background="#DC008577">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#DC008577"
-        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="40dp"
+                android:textColor="@color/red"
+                android:text="sss"
+                android:textStyle="bold"
+                android:textSize="30dp"/>
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -25,12 +38,6 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="email" />
-
             <EditText
                 android:id="@+id/Nome"
                 android:layout_width="match_parent"
@@ -40,6 +47,35 @@
                 android:inputType="textEmailAddress"
                 android:padding="10dp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="email" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutClocks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TimePicker
+                android:id="@+id/datePicker1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner"/>
+
+            <TimePicker
+                android:id="@+id/datePicker2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner"/>
 
         </LinearLayout>
 
@@ -54,8 +90,6 @@
             android:textAllCaps="false"
             android:textColor="#FFF" />
 
-
-
         <ProgressBar
             android:id="@+id/progressBar1"
             android:layout_width="wrap_content"
@@ -65,7 +99,6 @@
             android:layout_marginTop="25dp"
             android:indeterminateTint="@android:color/white"/>
 
-    </LinearLayout>
 
 
 </LinearLayout>
