@@ -24,8 +24,10 @@
         <activity android:name=".RecuperaPassword" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity android:name=".BasicActivity"></activity>
         <activity android:name=".Utility.BaseActivity"></activity>
-        <activity android:name=".Rubrica"></activity>
+        <activity android:name=".AggiungiContatto"></activity>
         <activity android:name=".Profilo"></activity>
+        <activity android:name=".Contatta"></activity>
+        <activity android:name=".VisualizzaRubrica"></activity>
         <activity android:name=".SetLezione" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
 
 

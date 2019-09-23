@@ -9,7 +9,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
     android:layout_gravity="start"
-    tools:context=".Rubrica">
+    tools:context=".AggiungiContatto">
 
 
     <LinearLayout

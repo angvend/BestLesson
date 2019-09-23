@@ -19,7 +19,7 @@ public class OrganizzaCalendario extends AppCompatActivity {
 //        b.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                startActivity(new Intent(OrganizzaCalendario.this, Rubrica.class));
+//                startActivity(new Intent(OrganizzaCalendario.this, AggiungiContatto.class));
 //            }
 //        });
 

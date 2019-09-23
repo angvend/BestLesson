@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class Rubrica extends Activity {
+public class AggiungiContatto extends Activity {
 
 
     FirebaseAuth mAuth;
@@ -57,7 +57,7 @@ public class Rubrica extends Activity {
 
         utente = new Utente();
 
-        setContentView(R.layout.activity_rubrica);
+        setContentView(R.layout.activity_aggiungicontatto);
 
 
         txtNome = (EditText) findViewById(R.id.txtNome);

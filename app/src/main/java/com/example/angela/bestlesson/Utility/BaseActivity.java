@@ -9,10 +9,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.angela.bestlesson.BasicActivity;
+import com.example.angela.bestlesson.Contatta;
 import com.example.angela.bestlesson.Profilo;
 import com.example.angela.bestlesson.R;
-import com.example.angela.bestlesson.Rubrica;
 import com.example.angela.bestlesson.SetLezione;
+import com.example.angela.bestlesson.VisualizzaRubrica;
 import com.google.android.material.navigation.NavigationView;
 
 import java.text.SimpleDateFormat;
@@ -84,7 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
                     case R.id.nav_rubrica:
                         Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT ).show();
 
-                        intent = new Intent(getApplicationContext(), Rubrica.class);
+                        intent = new Intent(getApplicationContext(), VisualizzaRubrica.class);
                         startActivity(intent);
 
                         break;
@@ -93,6 +94,13 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
                         Toast.makeText(getApplicationContext(), "Profilo", Toast.LENGTH_SHORT ).show();
 
                         intent = new Intent(getApplicationContext(), Profilo.class);
+                        startActivity(intent);
+
+                        break;
+
+                    case R.id.nav_contatta:
+                        Toast.makeText(getApplicationContext(), "Contatta", Toast.LENGTH_SHORT ).show();
+                        intent = new Intent(getApplicationContext(), Contatta.class);
                         startActivity(intent);
 
                         break;
