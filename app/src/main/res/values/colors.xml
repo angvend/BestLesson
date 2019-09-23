@@ -15,4 +15,6 @@
     <color name="strong_blue">#002E87</color>
     <color name="cleargray">#D4D4D4</color>
     <color name="red">#FF0000</color>
+    <color name="black">#000000</color>
+
 </resources>

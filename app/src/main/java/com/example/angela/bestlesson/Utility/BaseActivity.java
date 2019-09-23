@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.angela.bestlesson.BasicActivity;
+import com.example.angela.bestlesson.Profilo;
 import com.example.angela.bestlesson.R;
 import com.example.angela.bestlesson.Rubrica;
 import com.example.angela.bestlesson.SetLezione;
@@ -84,6 +85,14 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
                         Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT ).show();
 
                         intent = new Intent(getApplicationContext(), Rubrica.class);
+                        startActivity(intent);
+
+                        break;
+
+                    case R.id.nav_profilo:
+                        Toast.makeText(getApplicationContext(), "Profilo", Toast.LENGTH_SHORT ).show();
+
+                        intent = new Intent(getApplicationContext(), Profilo.class);
                         startActivity(intent);
 
                         break;
