@@ -131,11 +131,11 @@ public class Rubrica extends Activity {
 
                                 }
                             }
+                        }
 
-                            if(flag=false){
+                        if(flag == false){
 
-                                Toast.makeText(getApplicationContext(), "Studente non trovato in database!", Toast.LENGTH_SHORT ).show();
-                            }
+                            Toast.makeText(getApplicationContext(), "Studente non trovato in database!", Toast.LENGTH_SHORT ).show();
                         }
                             //}
 
@@ -201,14 +201,5 @@ public class Rubrica extends Activity {
             }
         });
     }
-
-
-    private Integer getTipo(DataSnapshot dataSnapshot, String userId) {
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
-            userInformation.setTipo(Integer.parseInt(ds.child(userId).child("tipo").getValue().toString()));
-            tipo = userInformation.getTipo();
-        }
-        return tipo;
-}
 }
 

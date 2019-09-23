@@ -2,11 +2,13 @@ package com.example.angela.bestlesson;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,9 +56,16 @@ public class SetLezione extends AppCompatActivity{
 
     private Intent intent;
 
+    private Lezione lezioneDaSalvare;
+
+
+    boolean flagColor = false;
+
     Button btn_imposta;
     ProgressBar progressBar;
     private FirebaseAuth mAuth;
+
+    String utenteSelezionato;
 
 
     @Override
@@ -67,6 +76,8 @@ public class SetLezione extends AppCompatActivity{
         ora = (TextView) findViewById(R.id.time);
 
         lezione = (TextView) findViewById(R.id.lezione);
+
+        lezioneDaSalvare = new Lezione();
 
         inizio = (TimePicker) findViewById(R.id.datePicker1);
         fine = (TimePicker) findViewById(R.id.datePicker2);
@@ -156,13 +167,12 @@ public class SetLezione extends AppCompatActivity{
 
                                 }
                             }
-
-                            if(flag=false){
-
-                                Toast.makeText(getApplicationContext(), "Studente non trovato in database!", Toast.LENGTH_SHORT ).show();
-                            }
                         }
 
+                        if(flag == false){
+
+                            Toast.makeText(getApplicationContext(), "Studente non trovato in database!", Toast.LENGTH_SHORT ).show();
+                        }
 
                     }
 
@@ -188,6 +198,25 @@ public class SetLezione extends AppCompatActivity{
 
             }
     });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (flagColor == false) {
+                    view.setBackgroundColor(Color.CYAN);
+                    flagColor = true;
+                    view.setSelected(true);
+                    utenteSelezionato = listaStudenti.get(position);
+
+                } else {
+                    view.setSelected(false);
+                    flagColor = false;
+                    view.setBackgroundColor(Color.TRANSPARENT);
+                    utenteSelezionato = "";
+                }
+            }
+        });
+
     }
 
     @Override
@@ -198,15 +227,21 @@ public class SetLezione extends AppCompatActivity{
     }
     private void impostaLezione(){
 
-        final String nomeStudente = nome.getText().toString().trim();
+        int oraInizio = inizio.getCurrentHour();
+        int minutoInizio = inizio.getCurrentMinute();
 
-        if (TextUtils.isEmpty(nomeStudente)) {
-            Toast.makeText(getApplicationContext(), "Per favore inserisci l'email...", Toast.LENGTH_LONG).show();
-            return;
-        }
+        int oraFine = fine.getCurrentHour();
+        int minutoFine = fine.getCurrentMinute();
 
 
-        //CODICE PUT LEZIONE IN DATABASE
+        lezioneDaSalvare.setStudente(utenteSelezionato);
+        lezioneDaSalvare.setInsegnante(mAuth.getCurrentUser().getEmail());
+        lezioneDaSalvare.setOraInizio(String.valueOf(oraInizio) + ":" + String.valueOf(minutoInizio));
+        lezioneDaSalvare.setOraFine(String.valueOf(oraFine) + ":" + String.valueOf(minutoFine));
+
+        FirebaseDatabase.getInstance().getReference("lezioni").push().setValue(lezioneDaSalvare);
+
+
 
     }
 

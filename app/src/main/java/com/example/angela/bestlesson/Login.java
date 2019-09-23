@@ -143,7 +143,6 @@ public class Login extends AppCompatActivity {
                     Integer studente = 2;
                     Integer insegnante = 1;
 
-
                     Integer type = getTipo(dataSnapshot,userID);
 
                     if(type == insegnante){
@@ -170,9 +169,11 @@ public class Login extends AppCompatActivity {
         }
 
     private Integer getTipo(DataSnapshot dataSnapshot, String userId) {
+
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             userInformation.setTipo(Integer.parseInt(ds.child(userId).child("tipo").getValue().toString()));
             tipo = userInformation.getTipo();
+
 
         }
         return tipo;
