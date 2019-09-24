@@ -72,7 +72,6 @@ public class VisualizzaRubrica extends Activity {
         if(typeUser.equals("2")){
 
             utentiRef = rootRef.child("utenti");
-
             button_add = (FloatingActionButton) findViewById(R.id.aggiungiUtente);
             button_add.setVisibility(View.INVISIBLE);
         }

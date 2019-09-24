@@ -1,6 +1,7 @@
 package com.example.angela.bestlesson;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -28,6 +29,8 @@ public class BasicActivity extends BaseActivity {
 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(final int newYear, final int newMonth) {
+
+
 
         final FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
