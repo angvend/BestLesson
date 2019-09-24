@@ -148,13 +148,17 @@ public class Login extends AppCompatActivity {
                     if(type == insegnante){
 
                         Intent intent = new Intent(Login.this, BasicActivity.class);
+                        intent.putExtra("tipoUtente",type.toString());
                         startActivity(intent);
                         progressBar.setVisibility(View.INVISIBLE);
                     }
 
                     if(type == studente){
 
-                        Toast.makeText(getApplicationContext(), "PARTE STUDENTE ANCORA NON IMPLEMENTATA", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(Login.this, BasicActivity.class);
+                        intent.putExtra("tipoUtente",type.toString());
+                        startActivity(intent);
+                        progressBar.setVisibility(View.INVISIBLE);
 
                         //Intent intent = new Intent(Login.this, BasicActivity.class);
                         //startActivity(intent);

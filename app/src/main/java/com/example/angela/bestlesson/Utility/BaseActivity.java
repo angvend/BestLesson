@@ -3,18 +3,28 @@ package com.example.angela.bestlesson.Utility;
 import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.angela.bestlesson.BasicActivity;
 import com.example.angela.bestlesson.Contatta;
+import com.example.angela.bestlesson.Login;
 import com.example.angela.bestlesson.Profilo;
 import com.example.angela.bestlesson.R;
 import com.example.angela.bestlesson.SetLezione;
+import com.example.angela.bestlesson.UserInformation;
 import com.example.angela.bestlesson.VisualizzaRubrica;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -42,6 +52,16 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
     private AppBarConfiguration mAppBarConfiguration;
 
 
+    private DatabaseReference myRef;
+    private FirebaseDatabase mFirebaseDatabase;
+
+
+    private UserInformation userInformation;
+    private Integer tipo = 0;
+    private FirebaseAuth mAuth;
+    private int utente;
+
+
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
@@ -53,8 +73,6 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
 
-
-
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
@@ -62,7 +80,16 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
+        mAuth = FirebaseAuth.getInstance();
+        userInformation = new UserInformation();
+
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference().child("utenti");
+
+        controlloUtente();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         final NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
@@ -253,11 +280,16 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
     @Override
     public void onEmptyViewLongPress(Calendar time) {
-        Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(BaseActivity.this, SetLezione.class);
-        String dataCliccata = String.valueOf(getData(time));
-        intent.putExtra("dataPassata", dataCliccata);
-        startActivity(intent);
+
+        if(utente==1) {
+
+            Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(BaseActivity.this, SetLezione.class);
+            String dataCliccata = String.valueOf(getData(time));
+            intent.putExtra("dataPassata", dataCliccata);
+            startActivity(intent);
+        }
+
     }
 
     private String getData(Calendar time){
@@ -272,6 +304,57 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
     public WeekView getWeekView() {
         return mWeekView;
+    }
+
+    private Integer getTipo(DataSnapshot dataSnapshot, String email) {
+
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
+
+            if(ds.child("email").getValue().equals(email)){
+
+                String type = ds.child("tipo").getValue().toString();
+                Log.d("AIUTO", email);
+                Log.d("AIUTO", type);
+
+                userInformation.setTipo(Integer.parseInt(type));
+            }
+
+        }
+
+        tipo = userInformation.getTipo();
+
+        return tipo;
+    }
+
+    private void controlloUtente(){
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                String email = mAuth.getCurrentUser().getEmail();
+
+                Integer studente = 2;
+                Integer insegnante = 1;
+
+                Integer type = getTipo(dataSnapshot,email);
+
+                if(type == insegnante){
+                    utente = insegnante;
+                }
+
+                if(type == studente){
+
+                    utente = studente;
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
 
