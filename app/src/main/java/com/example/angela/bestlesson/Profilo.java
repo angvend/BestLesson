@@ -1,7 +1,11 @@
 package com.example.angela.bestlesson;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +27,8 @@ public class Profilo extends AppCompatActivity {
     private DatabaseReference myRef;
     private FirebaseDatabase mFirebaseDatabase;
 
+    private Button logout;
+
     String nome, cognome, professione;
 
 
@@ -39,6 +45,18 @@ public class Profilo extends AppCompatActivity {
         emailTV = (TextView) findViewById(R.id.email);
         nomeTV = (TextView) findViewById(R.id.nome_profilo);
         professioneTV = (TextView) findViewById(R.id.professione);
+
+        logout = (Button) findViewById(R.id.btn_logout);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Intent intent = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Logout effettuato correttamente!", Toast.LENGTH_SHORT ).show();
+            }
+        });
 
         userInformation = new UserInformation();
         mAuth = FirebaseAuth.getInstance();

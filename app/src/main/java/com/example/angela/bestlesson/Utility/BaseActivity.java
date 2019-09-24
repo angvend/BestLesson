@@ -113,6 +113,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
                         Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT ).show();
 
                         intent = new Intent(getApplicationContext(), VisualizzaRubrica.class);
+                        intent.putExtra("tipoUtente1", String.valueOf(utente));
                         startActivity(intent);
 
                         break;

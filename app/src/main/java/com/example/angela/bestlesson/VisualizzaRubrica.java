@@ -1,5 +1,6 @@
 package com.example.angela.bestlesson;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -34,10 +35,12 @@ public class VisualizzaRubrica extends Activity {
 
     private Intent intent;
 
+    private String typeUser;
 
     private Utente utente;
 
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +55,27 @@ public class VisualizzaRubrica extends Activity {
         String userID = mAuth.getCurrentUser().getUid();
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference utentiRef = rootRef.child("utenti").child(userID).child("studenti");
+        DatabaseReference utentiRef = rootRef.child("utenti");
+
+
+        intent = getIntent();
+        typeUser = intent.getStringExtra("tipoUtente1");
+
+        if(typeUser.equals("1")){
+
+            utentiRef = rootRef.child("utenti").child(userID).child("studenti");
+
+            button_add = (FloatingActionButton) findViewById(R.id.aggiungiUtente);
+            button_add.setVisibility(View.VISIBLE);
+        }
+
+        if(typeUser.equals("2")){
+
+            utentiRef = rootRef.child("utenti");
+
+            button_add = (FloatingActionButton) findViewById(R.id.aggiungiUtente);
+            button_add.setVisibility(View.INVISIBLE);
+        }
 
 
         final ArrayList<String> listaEmail = new ArrayList<>();
@@ -60,7 +83,6 @@ public class VisualizzaRubrica extends Activity {
         final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayListEdit);
 
         ValueEventListener eventListener = new ValueEventListener() {
-
 
             String nome, cognome, email, tipo2, idStudente;
 
@@ -77,20 +99,40 @@ public class VisualizzaRubrica extends Activity {
                     Toast.makeText(getApplicationContext(), "Studente non trovato in database!", Toast.LENGTH_SHORT ).show();
                 }else{
 
-
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    cognome = ds.child("cognome").getValue(String.class);
-                    nome = ds.child("nome").getValue(String.class);
-                    email = ds.child("email").getValue(String.class);
-
-
-                    arrayListEdit.add(nome + " " + cognome);
-                    listaEmail.add(email);
-
-                    listView.setAdapter(arrayAdapter);
+                    if(typeUser.equals("1")){
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            cognome = ds.child("cognome").getValue(String.class);
+                            nome = ds.child("nome").getValue(String.class);
+                            email = ds.child("email").getValue(String.class);
 
 
-                }
+                            arrayListEdit.add(nome + " " + cognome);
+                            listaEmail.add(email);
+
+                            listView.setAdapter(arrayAdapter);
+
+                        }
+                    }
+
+                    if(typeUser.equals("2")){
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                            if(ds.child("tipo").getValue().toString().equals("1")){
+
+                                cognome = ds.child("cognome").getValue(String.class);
+                                nome = ds.child("nome").getValue(String.class);
+                                email = ds.child("email").getValue(String.class);
+
+
+                                arrayListEdit.add(nome + " " + cognome);
+                                listaEmail.add(email);
+
+                                listView.setAdapter(arrayAdapter);
+                            }
+
+                        }
+                    }
+
             }
             }
 
@@ -114,8 +156,6 @@ public class VisualizzaRubrica extends Activity {
 
         utentiRef.addListenerForSingleValueEvent(eventListener);
 
-
-        button_add = (FloatingActionButton) findViewById(R.id.aggiungiUtente);
         button_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,9 +163,6 @@ public class VisualizzaRubrica extends Activity {
                 startActivity(intent);
             }
         });
-
-
-
     }
 
 }
