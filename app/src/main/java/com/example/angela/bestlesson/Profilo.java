@@ -31,8 +31,9 @@ public class Profilo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo);
 
+
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
+        myRef = mFirebaseDatabase.getReference().child("utenti");
 
 
         emailTV = (TextView) findViewById(R.id.email);
@@ -47,9 +48,9 @@ public class Profilo extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                String userID = mAuth.getCurrentUser().getUid();
+                String email = mAuth.getCurrentUser().getEmail();
 
-                getNomeCognome(dataSnapshot, userID);
+                getNomeCognome(dataSnapshot, email);
 
             }
             @Override
@@ -61,23 +62,27 @@ public class Profilo extends AppCompatActivity {
         emailTV.setText("  " + email);
     }
 
-    private String getNomeCognome(DataSnapshot dataSnapshot, String userId) {
+    private String getNomeCognome(DataSnapshot dataSnapshot, String email) {
 
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
-            nome = ds.child(userId).child("nome").getValue().toString();
-            cognome = ds.child(userId).child("cognome").getValue().toString();
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-            nomeTV.setText("  "+ nome +" "+ cognome);
 
-            userInformation.setTipo(Integer.parseInt(ds.child(userId).child("tipo").getValue().toString()));
-            Integer tipo = userInformation.getTipo();
+            if (ds.child("email").getValue().equals(email)) {
 
-            if (tipo == 1){
-                professioneTV.setText("Insegnante");
-            }else
-                professioneTV.setText("Studente");
+                nome = ds.child("nome").getValue().toString();
+                cognome = ds.child("cognome").getValue().toString();
+
+                nomeTV.setText("  " + nome + " " + cognome);
+
+                userInformation.setTipo(Integer.parseInt(ds.child("tipo").getValue().toString()));
+                Integer tipo = userInformation.getTipo();
+
+                if (tipo == 1) {
+                    professioneTV.setText("Insegnante");
+                } else
+                    professioneTV.setText("Studente");
+            }
         }
         return nome;
     }
-
 }

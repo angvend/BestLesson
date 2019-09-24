@@ -138,12 +138,12 @@ public class Login extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    String userID = mAuth.getCurrentUser().getUid();
+                    String email = mAuth.getCurrentUser().getEmail();
 
                     Integer studente = 2;
                     Integer insegnante = 1;
 
-                    Integer type = getTipo(dataSnapshot,userID);
+                    Integer type = getTipo(dataSnapshot,email);
 
                     if(type == insegnante){
 
@@ -154,9 +154,11 @@ public class Login extends AppCompatActivity {
 
                     if(type == studente){
 
-                        Intent intent = new Intent(Login.this, BasicActivity.class);
-                        startActivity(intent);
-                        progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(getApplicationContext(), "PARTE STUDENTE ANCORA NON IMPLEMENTATA", Toast.LENGTH_LONG).show();
+
+                        //Intent intent = new Intent(Login.this, BasicActivity.class);
+                        //startActivity(intent);
+                        //progressBar.setVisibility(View.INVISIBLE);
                     }
 
                 }
@@ -168,16 +170,23 @@ public class Login extends AppCompatActivity {
             });
         }
 
-    private Integer getTipo(DataSnapshot dataSnapshot, String userId) {
+    private Integer getTipo(DataSnapshot dataSnapshot, String email) {
 
         for(DataSnapshot ds : dataSnapshot.getChildren()){
 
-            String type = ds.child("tipo").getValue().toString();
+            if(ds.child("email").getValue().equals(email)){
 
-            userInformation.setTipo(Integer.parseInt(type));
-            tipo = userInformation.getTipo();
+                String type = ds.child("tipo").getValue().toString();
+                Log.d("AIUTO", email);
+                Log.d("AIUTO", type);
+
+                userInformation.setTipo(Integer.parseInt(type));
+            }
 
         }
+
+        tipo = userInformation.getTipo();
+
         return tipo;
     }
 }
