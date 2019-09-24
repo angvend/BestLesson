@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start"
     android:layout_gravity="start"
     tools:context=".AggiungiContatto">
 
@@ -27,11 +26,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="30dp"
+                android:text="Aggiungi Studente"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Inserisci qui nome e cognome"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:textSize="20sp"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
 

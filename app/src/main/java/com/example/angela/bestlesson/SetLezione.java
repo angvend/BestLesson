@@ -35,7 +35,7 @@ public class SetLezione extends AppCompatActivity{
 
 
     private EditText nome;
-    private TextView ora;
+    private TextView data;
     private TextView lezione;
     private TextView textViewStudenti;
 
@@ -44,8 +44,8 @@ public class SetLezione extends AppCompatActivity{
     private TimePicker inizio;
     private TimePicker fine;
 
-    private String tempoPassato;
-    private String time;
+    private String dataPassata;
+    private String date;
 
     private String email;
 
@@ -73,7 +73,7 @@ public class SetLezione extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_lezione);
 
-        ora = (TextView) findViewById(R.id.time);
+        data = (TextView) findViewById(R.id.data);
 
         lezione = (TextView) findViewById(R.id.lezione);
 
@@ -100,13 +100,11 @@ public class SetLezione extends AppCompatActivity{
 
         intent = getIntent();
 
-        tempoPassato = intent.getStringExtra("passaggioTempo");
+        dataPassata = intent.getStringExtra("dataPassata");
 
-        time = tempoPassato + ".00";
+        date = dataPassata;
 
-        Log.d("AAA", time);
-
-        ora.setText(time);
+        data.setText(date);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar2);
         btn_imposta = findViewById(R.id.btn_imposta);
@@ -155,7 +153,7 @@ public class SetLezione extends AppCompatActivity{
                             if (cognome.equalsIgnoreCase(txtCognome.getText().toString()) == true || (nome.equalsIgnoreCase(txtNome.getText().toString())) == true) {
                                 if (tipo2.equals(("2"))) {
 
-                                    arrayListEdit.add(email);
+                                    arrayListEdit.add(nome + " " + cognome + " (" + email + ")");
 
                                     listaStudenti.add(email); //lista degli studenti
 
@@ -221,27 +219,97 @@ public class SetLezione extends AppCompatActivity{
 
     @Override
     protected void onResume() {
-        ora.setText(time);
+        data.setText(date);
         super.onResume();
 
     }
-    private void impostaLezione(){
+    private void impostaLezione() {
 
         int oraInizio = inizio.getCurrentHour();
         int minutoInizio = inizio.getCurrentMinute();
-
         int oraFine = fine.getCurrentHour();
         int minutoFine = fine.getCurrentMinute();
 
+        int conteggioMinutiInizio = 0;
+        int conteggioMinutiFine = 0;
 
-        lezioneDaSalvare.setStudente(utenteSelezionato);
-        lezioneDaSalvare.setInsegnante(mAuth.getCurrentUser().getEmail());
-        lezioneDaSalvare.setOraInizio(String.valueOf(oraInizio) + ":" + String.valueOf(minutoInizio));
-        lezioneDaSalvare.setOraFine(String.valueOf(oraFine) + ":" + String.valueOf(minutoFine));
+        conteggioMinutiInizio = (oraInizio * 60) + minutoInizio;
+        conteggioMinutiFine = (oraFine * 60) + minutoFine;
 
-        FirebaseDatabase.getInstance().getReference("lezioni").push().setValue(lezioneDaSalvare);
+        String orarioInizio = correggiOraInizio();
+        String orarioFine = correggiOraFine();
 
 
+        if (conteggioMinutiInizio < conteggioMinutiFine) {
+
+            if(utenteSelezionato == null){
+                Toast.makeText(getApplicationContext(), "Inserisci lo studente!", Toast.LENGTH_SHORT ).show();
+            }else{
+            lezioneDaSalvare.setStudente(utenteSelezionato);
+
+            lezioneDaSalvare.setInsegnante(mAuth.getCurrentUser().getEmail());
+            lezioneDaSalvare.setOraInizio(orarioInizio);
+            lezioneDaSalvare.setOraFine(orarioFine);
+            lezioneDaSalvare.setData(date);
+            lezioneDaSalvare.setOreDiLezione(oraFine-oraInizio);
+
+            FirebaseDatabase.getInstance().getReference("lezioni").push().setValue(lezioneDaSalvare);
+
+            Toast.makeText(getApplicationContext(), "Lezione assegnata con successo!", Toast.LENGTH_SHORT ).show();
+
+            Intent intent = new Intent(getApplicationContext(), BasicActivity.class);
+            startActivity(intent);
+
+        }
+        }else{
+            Toast.makeText(getApplicationContext(), "Attenzione, inserisci un orario valido!", Toast.LENGTH_SHORT ).show();
+        }
+    }
+
+    private String correggiOraInizio(){
+
+        String oraInizio1;
+        String minutiInizio1;
+
+        if(inizio.getCurrentHour() < 10) {
+            oraInizio1 = "0" + inizio.getCurrentHour();
+        }else{
+            oraInizio1 = inizio.getCurrentHour().toString();
+        }
+
+        if(inizio.getCurrentMinute() < 10) {
+            minutiInizio1 = "0" + inizio.getCurrentMinute();
+        }else{
+            minutiInizio1 = inizio.getCurrentMinute().toString();
+        }
+
+
+        String orarioInizio = oraInizio1 + ":" + minutiInizio1;
+
+        return orarioInizio;
+
+    }
+
+    private String correggiOraFine(){
+
+        String minutiFine1;
+        String oraFine1;
+
+        if(fine.getCurrentHour() < 10) {
+            oraFine1 = "0" + fine.getCurrentHour();
+        }else{
+            oraFine1 = fine.getCurrentHour().toString();
+        }
+
+        if(fine.getCurrentMinute() < 10) {
+            minutiFine1 = "0" + fine.getCurrentMinute();
+        }else{
+            minutiFine1 = fine.getCurrentMinute().toString();
+        }
+
+        String orarioFine = oraFine1 + ":" + minutiFine1;
+
+        return orarioFine;
 
     }
 

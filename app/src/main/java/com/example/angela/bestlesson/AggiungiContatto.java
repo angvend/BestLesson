@@ -42,6 +42,7 @@ public class AggiungiContatto extends Activity {
     ListView listView;
     DataSnapshot ds;
     boolean flagColor = false;
+    boolean presente;
 
     private UserInformation userInformation;
     private Integer tipo = 0;
@@ -54,8 +55,6 @@ public class AggiungiContatto extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-
-        utente = new Utente();
 
         setContentView(R.layout.activity_aggiungicontatto);
 
@@ -87,7 +86,6 @@ public class AggiungiContatto extends Activity {
                 listView.setAdapter(null); //cancello le righe
                 arrayListEdit.clear();     //cancello l'array temporaneo per stampare a video
                 arrayAdapter.clear();
-                listaStudenti.clear();
 
                 DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference utentiRef = rootRef.child("utenti");
@@ -101,18 +99,21 @@ public class AggiungiContatto extends Activity {
 
                         Boolean flag = false;
 
+                        listaStudenti.clear();
 
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
                             cognome = ds.child("cognome").getValue(String.class);
                             nome = ds.child("nome").getValue(String.class);
                             tipo2 = ds.child("tipo").getValue().toString();
                             email = ds.child("email").getValue(String.class);
-                            //idStudente = ds.getKey();
 
                             // if (type == 1) {
                             //  System.out.println(getTipo(dataSnapshot, userID));
                             if (cognome.equalsIgnoreCase(txtCognome.getText().toString()) == true || (nome.equalsIgnoreCase(txtNome.getText().toString())) == true) {
                                 if (tipo2.equals(("2"))) {
+
+                                    utente = new Utente();
 
                                     utente.setNome(nome);
                                     utente.setCognome(cognome);
@@ -124,8 +125,6 @@ public class AggiungiContatto extends Activity {
                                     listaStudenti.add(utente); //lista degli studenti
 
                                     listView.setAdapter(arrayAdapter);
-
-                                    System.out.println(listaStudenti);
 
                                     flag = true;
 
@@ -176,27 +175,68 @@ public class AggiungiContatto extends Activity {
                     flagColor = true;
                     view.setSelected(true);
                     studentiSelezionati.add(listaStudenti.get(position));
-                    Log.d("FRANCO", studentiSelezionati.toString());
 
                 } else {
                     view.setSelected(false);
                     flagColor = false;
                     view.setBackgroundColor(Color.TRANSPARENT);
                     studentiSelezionati.remove(listaStudenti.get(position));
-                    Log.d("FRANCO", studentiSelezionati.toString());
                 }
             }
         });
 
         aggiungi.setOnClickListener(new View.OnClickListener() {
+
+            int j=0;
+
             @Override
             public void onClick(View v) {
 
+
+                presente = false;
+
+
                 for(int i=0; i<studentiSelezionati.size(); i++){
 
-                    FirebaseDatabase.getInstance().getReference("utenti")
-                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("studenti").push().setValue(studentiSelezionati.get(i));
+                    j = i;
+
+                    String userID = mAuth.getCurrentUser().getUid();
+
+                    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                    DatabaseReference studentiRef = rootRef.child("utenti").child(userID).child("studenti");
+
+                    ValueEventListener eventListener = new ValueEventListener() {
+
+
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                                if(studentiSelezionati.get(j).getEmail().equals(ds.child("email").getValue(String.class))) {
+                                    presente = true;
+                                }
+                            }
+
+                            if(presente == false){
+                                FirebaseDatabase.getInstance().getReference("utenti")
+                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("studenti").push().setValue(studentiSelezionati.get(j));
+                            }else{
+                                Toast.makeText(getApplicationContext(), studentiSelezionati.get(j).getEmail() + " già presente in database", Toast.LENGTH_SHORT ).show();
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+
+                    };
+
+                    studentiRef.addListenerForSingleValueEvent(eventListener);
                 }
+
 
             }
         });

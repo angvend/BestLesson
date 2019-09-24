@@ -3,7 +3,27 @@ package com.example.angela.bestlesson;
 public class Lezione {
     String studente;
     String insegnante;
+    String data;
     String oraInizio;
+
+    public int getOreDiLezione() {
+        return oreDiLezione;
+    }
+
+    public void setOreDiLezione(int oreDiLezione) {
+        this.oreDiLezione = oreDiLezione;
+    }
+
+    int oreDiLezione;
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
     String oraFine;
 
 

@@ -2,12 +2,15 @@ package com.example.angela.bestlesson;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,28 +49,49 @@ public class VisualizzaRubrica extends Activity {
         listView = (ListView) findViewById(R.id.lista);
 
 
-        final ArrayList<String> arrayListEdit = new ArrayList<>();
-        final ArrayList<Utente> listaStudenti = new ArrayList<>();
-        final ArrayList<Utente> studentiSelezionati = new ArrayList<>();
-        final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayListEdit);
+        String userID = mAuth.getCurrentUser().getUid();
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference utentiRef = rootRef.child("utenti");
+        DatabaseReference utentiRef = rootRef.child("utenti").child(userID).child("studenti");
+
+
+        final ArrayList<String> listaEmail = new ArrayList<>();
+        final ArrayList<String> arrayListEdit = new ArrayList<>();
+        final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayListEdit);
+
         ValueEventListener eventListener = new ValueEventListener() {
 
 
+            String nome, cognome, email, tipo2, idStudente;
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String userID = mAuth.getCurrentUser().getUid();
+
+                listView.setAdapter(null); //cancello le righe
+                arrayListEdit.clear();     //cancello l'array temporaneo per stampare a video
+                arrayAdapter.clear();
+                listaEmail.clear();
+
+                if(dataSnapshot.getChildren() == null){
+
+                    Toast.makeText(getApplicationContext(), "Studente non trovato in database!", Toast.LENGTH_SHORT ).show();
+                }else{
+
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    ds.child(userID).child("studenti").child("LpQ7HpmzNsQWbCLHaOv").getValue().toString();
-                    Log.d("vedi", ds.child(userID).child("studenti").child("LpQ7HpmzNsQWbCLHaOv").getValue().toString());
+                    cognome = ds.child("cognome").getValue(String.class);
+                    nome = ds.child("nome").getValue(String.class);
+                    email = ds.child("email").getValue(String.class);
+
+
+                    arrayListEdit.add(nome + " " + cognome);
+                    listaEmail.add(email);
+
                     listView.setAdapter(arrayAdapter);
-                    arrayListEdit.add(ds.child(userID).child("studenti").child("LpQ7HpmzNsQWbCLHaOv").getValue().toString());
 
 
                 }
+            }
             }
 
             @Override
@@ -75,6 +99,20 @@ public class VisualizzaRubrica extends Activity {
 
             }
         };
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                intent = new Intent(getApplicationContext(), Contatta.class);
+                intent.putExtra("emailPassata", listaEmail.get(position));
+                Toast.makeText(getApplicationContext(), listaEmail.get(position), Toast.LENGTH_SHORT ).show();
+                startActivity(intent);
+        }
+
+        });
+
+
+        utentiRef.addListenerForSingleValueEvent(eventListener);
 
 
         button_add = (FloatingActionButton) findViewById(R.id.aggiungiUtente);

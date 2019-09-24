@@ -238,7 +238,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
     }
 
     protected String getEventTitle(Calendar time) {
-        return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
+        return String.format("", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
     }
 
     @Override
@@ -255,14 +255,19 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
     public void onEmptyViewLongPress(Calendar time) {
         Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(BaseActivity.this, SetLezione.class);
-        String oraCliccata = String.valueOf(getOra(time));
-        intent.putExtra("passaggioTempo", oraCliccata);
+        String dataCliccata = String.valueOf(getData(time));
+        intent.putExtra("dataPassata", dataCliccata);
         startActivity(intent);
     }
 
-    private int getOra(Calendar time){
-        int ora = time.get(Calendar.HOUR_OF_DAY);
-        return ora;
+    private String getData(Calendar time){
+        int giorno = time.get(Calendar.DATE);
+        int mese = time.get(Calendar.MONTH);
+        int anno = time.get(Calendar.YEAR);
+
+        String date = giorno + "/" + mese + "/" + anno;
+
+        return date;
     }
 
     public WeekView getWeekView() {

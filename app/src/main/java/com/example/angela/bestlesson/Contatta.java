@@ -2,9 +2,11 @@ package com.example.angela.bestlesson;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Contatta extends AppCompatActivity {
 
     private EditText destinatarioET, oggettoET, messaggioET;
+    private Intent intent;
 
 
     @Override
@@ -22,6 +25,12 @@ public class Contatta extends AppCompatActivity {
         destinatarioET = (EditText) findViewById(R.id.txtEmail);
         oggettoET = (EditText) findViewById(R.id.txtOggetto);
         messaggioET = (EditText) findViewById(R.id.textMessaggio);
+
+        intent = getIntent();
+
+        if(intent.getStringExtra("emailPassata") != null){
+            destinatarioET.setText(intent.getStringExtra("emailPassata"));
+        }
 
         Button invia = findViewById(R.id.btn_invia);
         invia.setOnClickListener(new View.OnClickListener() {

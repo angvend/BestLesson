@@ -53,7 +53,7 @@ public class Login extends AppCompatActivity {
         initializeUI();
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
+        myRef = mFirebaseDatabase.getReference().child("utenti");
 
         userInformation = new UserInformation();
 
@@ -171,9 +171,11 @@ public class Login extends AppCompatActivity {
     private Integer getTipo(DataSnapshot dataSnapshot, String userId) {
 
         for(DataSnapshot ds : dataSnapshot.getChildren()){
-            userInformation.setTipo(Integer.parseInt(ds.child(userId).child("tipo").getValue().toString()));
-            tipo = userInformation.getTipo();
 
+            String type = ds.child("tipo").getValue().toString();
+
+            userInformation.setTipo(Integer.parseInt(type));
+            tipo = userInformation.getTipo();
 
         }
         return tipo;

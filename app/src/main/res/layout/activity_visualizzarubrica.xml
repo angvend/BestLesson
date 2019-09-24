@@ -21,11 +21,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:text="Rubrica"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Clicca su uno studente per contattarlo!"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="15dp"
             android:textStyle="bold" />
 
 <LinearLayout
@@ -35,6 +45,7 @@
     android:layout_marginRight="30dp"
     android:layout_marginLeft="30dp"
     android:layout_marginTop="20dp"
+    android:layout_marginBottom="60dp"
     android:background="@drawable/background_white"
     android:orientation="vertical"
     android:padding="20dp"
@@ -45,26 +56,35 @@
     <ListView
         android:id="@+id/lista"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="match_parent"
         android:background="@android:color/white"
         />
 </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/aggiungiUtente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="220dp"
-            android:layout_marginRight="20dp"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="0dp"
+            android:backgroundTint="#ff0000"
             android:clickable="true"
-            android:src="@drawable/ic_add"
             android:elevation="8dp"
-            android:backgroundTint="#ff0000"/>
+            android:src="@drawable/ic_add" />
 
-    </LinearLayout>
+    </FrameLayout>
 
-<!--    <com.google.android.material.navigation.NavigationView-->
+    <!--    <com.google.android.material.navigation.NavigationView-->
 <!--        android:id="@+id/nav_view"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="match_parent"-->

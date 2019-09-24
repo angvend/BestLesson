@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start"
     android:layout_gravity="start"
     tools:context=".AggiungiContatto">
 
@@ -27,11 +26,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:text="Contatta chi vuoi tu!"
+                android:layout_marginTop="40dp"
+                android:text="Contatta chi vuoi!"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
 
@@ -42,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="30dp"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/background_white"
                 android:orientation="vertical"
                 android:padding="20dp">
