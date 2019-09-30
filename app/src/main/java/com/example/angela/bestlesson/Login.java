@@ -49,15 +49,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mAuth = FirebaseAuth.getInstance();
         initializeUI();
-
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference().child("utenti");
-
-        userInformation = new UserInformation();
-
-        progressBar = (ProgressBar) findViewById(R.id.progressBar1);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +115,15 @@ public class Login extends AppCompatActivity {
     }
 
     private void initializeUI() {
+
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference().child("utenti");
+
+        userInformation = new UserInformation();
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+
         emailTV = findViewById(R.id.email);
         passwordTV = findViewById(R.id.password);
 

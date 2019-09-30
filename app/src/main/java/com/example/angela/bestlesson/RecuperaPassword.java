@@ -30,8 +30,8 @@ public class RecuperaPassword extends AppCompatActivity{
 
     private EditText txtEmail;
 
-    Button btn_invia;
-    ProgressBar progressBar;
+    private Button btn_invia;
+    private ProgressBar progressBar;
     private FirebaseAuth mAuth;
 
 
@@ -40,15 +40,7 @@ public class RecuperaPassword extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recuperapassword);
 
-
-        txtEmail = (EditText) findViewById(R.id.email);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btn_invia = findViewById(R.id.btn_invia);
-
-        mAuth = FirebaseAuth.getInstance();
-
-
-
+        inizializeUI();
 
         btn_invia.setOnClickListener(new View.OnClickListener() {
 
@@ -90,5 +82,11 @@ public class RecuperaPassword extends AppCompatActivity{
                 });
     }
 
+    public void inizializeUI(){
+        txtEmail = (EditText) findViewById(R.id.email);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        btn_invia = findViewById(R.id.btn_invia);
 
+        mAuth = FirebaseAuth.getInstance();
+    }
 }

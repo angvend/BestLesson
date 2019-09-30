@@ -35,10 +35,14 @@ public class VisualizzaRubrica extends Activity {
 
     private Intent intent;
 
+    private String userID;
+
     private String typeUser;
 
-    private Utente utente;
+    private DatabaseReference rootRef;
+    private DatabaseReference utentiRef;
 
+    private Utente utente;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -46,20 +50,7 @@ public class VisualizzaRubrica extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizzarubrica);
 
-        mAuth = FirebaseAuth.getInstance();
-
-        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        listView = (ListView) findViewById(R.id.lista);
-
-
-        String userID = mAuth.getCurrentUser().getUid();
-
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference utentiRef = rootRef.child("utenti");
-
-
-        intent = getIntent();
-        typeUser = intent.getStringExtra("tipoUtente1");
+        inizializeUI();
 
         if(typeUser.equals("1")){
 
@@ -162,6 +153,22 @@ public class VisualizzaRubrica extends Activity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void inizializeUI(){
+
+        mAuth = FirebaseAuth.getInstance();
+
+        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        listView = (ListView) findViewById(R.id.lista);
+
+        userID = mAuth.getCurrentUser().getUid();
+
+        intent = getIntent();
+        typeUser = intent.getStringExtra("tipoUtente1");
+
+        rootRef = FirebaseDatabase.getInstance().getReference();
+        utentiRef = rootRef.child("utenti");
     }
 
 }

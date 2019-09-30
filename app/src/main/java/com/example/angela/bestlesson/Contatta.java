@@ -16,23 +16,16 @@ public class Contatta extends AppCompatActivity {
     private EditText destinatarioET, oggettoET, messaggioET;
     private Intent intent;
 
+    private Button invia;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contatta);
 
-        destinatarioET = (EditText) findViewById(R.id.txtEmail);
-        oggettoET = (EditText) findViewById(R.id.txtOggetto);
-        messaggioET = (EditText) findViewById(R.id.textMessaggio);
+        inizializeUI();
 
-        intent = getIntent();
-
-        if(intent.getStringExtra("emailPassata") != null){
-            destinatarioET.setText(intent.getStringExtra("emailPassata"));
-        }
-
-        Button invia = findViewById(R.id.btn_invia);
         invia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,5 +48,20 @@ public class Contatta extends AppCompatActivity {
 
         intent.setType("message/rfc822");
         startActivity(Intent.createChooser(intent, "Scegli un email") );
+    }
+
+    public void inizializeUI(){
+
+        destinatarioET = (EditText) findViewById(R.id.txtEmail);
+        oggettoET = (EditText) findViewById(R.id.txtOggetto);
+        messaggioET = (EditText) findViewById(R.id.textMessaggio);
+
+        intent = getIntent();
+
+        if(intent.getStringExtra("emailPassata") != null){
+            destinatarioET.setText(intent.getStringExtra("emailPassata"));
+        }
+
+        invia = findViewById(R.id.btn_invia);
     }
 }

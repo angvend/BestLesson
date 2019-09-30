@@ -29,7 +29,9 @@ public class Profilo extends AppCompatActivity {
 
     private Button logout;
 
-    String nome, cognome, professione;
+    private String nome, cognome, professione;
+
+    private Integer tipo;
 
 
     @Override
@@ -37,16 +39,7 @@ public class Profilo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo);
 
-
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference().child("utenti");
-
-
-        emailTV = (TextView) findViewById(R.id.email);
-        nomeTV = (TextView) findViewById(R.id.nome_profilo);
-        professioneTV = (TextView) findViewById(R.id.professione);
-
-        logout = (Button) findViewById(R.id.btn_logout);
+        inizializeUI();
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,9 +50,6 @@ public class Profilo extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Logout effettuato correttamente!", Toast.LENGTH_SHORT ).show();
             }
         });
-
-        userInformation = new UserInformation();
-        mAuth = FirebaseAuth.getInstance();
 
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -93,7 +83,7 @@ public class Profilo extends AppCompatActivity {
                 nomeTV.setText("  " + nome + " " + cognome);
 
                 userInformation.setTipo(Integer.parseInt(ds.child("tipo").getValue().toString()));
-                Integer tipo = userInformation.getTipo();
+                tipo = userInformation.getTipo();
 
                 if (tipo == 1) {
                     professioneTV.setText("Insegnante");
@@ -102,5 +92,20 @@ public class Profilo extends AppCompatActivity {
             }
         }
         return nome;
+    }
+
+    public void inizializeUI(){
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = mFirebaseDatabase.getReference().child("utenti");
+
+
+        emailTV = (TextView) findViewById(R.id.email);
+        nomeTV = (TextView) findViewById(R.id.nome_profilo);
+        professioneTV = (TextView) findViewById(R.id.professione);
+
+        logout = (Button) findViewById(R.id.btn_logout);
+
+        userInformation = new UserInformation();
+        mAuth = FirebaseAuth.getInstance();
     }
 }

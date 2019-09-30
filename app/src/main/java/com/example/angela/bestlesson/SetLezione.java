@@ -35,24 +35,24 @@ public class SetLezione extends AppCompatActivity{
 
 
     private EditText nome;
+    private EditText txtNome, txtCognome;
+
     private TextView data;
     private TextView lezione;
     private TextView textViewStudenti;
-
-    EditText txtNome, txtCognome;
 
     private TimePicker inizio;
     private TimePicker fine;
 
     private String dataPassata;
     private String date;
-
     private String email;
+    private String utenteSelezionato;
 
-    Button conferma;
+    private Button conferma;
+    private Button btn_imposta;
 
-
-    ListView listView;
+    private ListView listView;
 
     private Intent intent;
 
@@ -61,57 +61,20 @@ public class SetLezione extends AppCompatActivity{
 
     boolean flagColor = false;
 
-    Button btn_imposta;
-    ProgressBar progressBar;
+    private ProgressBar progressBar;
+
     private FirebaseAuth mAuth;
-
-    String utenteSelezionato;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_lezione);
 
-        data = (TextView) findViewById(R.id.data);
-
-        lezione = (TextView) findViewById(R.id.lezione);
-
-        lezioneDaSalvare = new Lezione();
-
-        inizio = (TimePicker) findViewById(R.id.datePicker1);
-        fine = (TimePicker) findViewById(R.id.datePicker2);
-
-        textViewStudenti = (TextView) findViewById(R.id.textViewStudenti);
-
-        txtNome = (EditText) findViewById(R.id.txtNome1);
-        txtCognome = (EditText) findViewById(R.id.txtCognome1);
-
-        listView = (ListView) findViewById(R.id.list_view1);
-        conferma = (Button) findViewById(R.id.btn_conferma);
-
-        inizio.setIs24HourView(true);
-        fine.setIs24HourView(true);
-
+        inizializeUI();
 
         final ArrayList<String> listaStudenti = new ArrayList<>();
         final ArrayList<String> arrayListEdit = new ArrayList<>();
         final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayListEdit);
-
-        intent = getIntent();
-
-        dataPassata = intent.getStringExtra("dataPassata");
-
-        date = dataPassata;
-
-        data.setText(date);
-
-        progressBar = (ProgressBar) findViewById(R.id.progressBar2);
-        btn_imposta = findViewById(R.id.btn_imposta);
-
-        mAuth = FirebaseAuth.getInstance();
-
-
 
 
         conferma.setOnClickListener(new View.OnClickListener() {
@@ -317,5 +280,37 @@ public class SetLezione extends AppCompatActivity{
     public void hideKeyboard(View v) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
+    public void inizializeUI(){
+        data = (TextView) findViewById(R.id.data);
+
+        lezione = (TextView) findViewById(R.id.lezione);
+
+        lezioneDaSalvare = new Lezione();
+
+        textViewStudenti = (TextView) findViewById(R.id.textViewStudenti);
+
+        txtNome = (EditText) findViewById(R.id.txtNome1);
+        txtCognome = (EditText) findViewById(R.id.txtCognome1);
+
+        listView = (ListView) findViewById(R.id.list_view1);
+        conferma = (Button) findViewById(R.id.btn_conferma);
+
+        inizio = (TimePicker) findViewById(R.id.datePicker1);
+        fine = (TimePicker) findViewById(R.id.datePicker2);
+        inizio.setIs24HourView(true);
+        fine.setIs24HourView(true);
+
+        intent = getIntent();
+        dataPassata = intent.getStringExtra("dataPassata");
+        date = dataPassata;
+
+        data.setText(date);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar2);
+        btn_imposta = findViewById(R.id.btn_imposta);
+
+        mAuth = FirebaseAuth.getInstance();
     }
 }

@@ -5,6 +5,8 @@ public class Lezione {
     String insegnante;
     String data;
     String oraInizio;
+    String oraFine;
+    int oreDiLezione;
 
     public int getOreDiLezione() {
         return oreDiLezione;
@@ -14,8 +16,6 @@ public class Lezione {
         this.oreDiLezione = oreDiLezione;
     }
 
-    int oreDiLezione;
-
     public String getData() {
         return data;
     }
@@ -23,9 +23,6 @@ public class Lezione {
     public void setData(String data) {
         this.data = data;
     }
-
-    String oraFine;
-
 
     public String getStudente() {
         return studente;

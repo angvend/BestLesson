@@ -41,9 +41,7 @@ public class BasicActivity extends BaseActivity {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference lezioniRef = rootRef.child("lezioni");
 
-
         final Intent intent;
-
         intent = getIntent();
 
         final String tipoUtente;

@@ -32,50 +32,34 @@ import androidx.annotation.Nullable;
 public class AggiungiContatto extends Activity {
 
 
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
-    EditText txtNome, txtCognome;
-    Button conferma, aggiungi;
-    Utente utente;
-    LinearLayout linearLayout;
+    private EditText txtNome, txtCognome;
+    private Button conferma, aggiungi;
+    private Utente utente;
+    private LinearLayout linearLayout;
 
-    ListView listView;
-    DataSnapshot ds;
+    private ListView listView;
+    private DataSnapshot ds;
     boolean flagColor = false;
     boolean presente;
 
     private UserInformation userInformation;
     private Integer tipo = 0;
 
-
-    TextView email;
+    private TextView email;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
 
-        setContentView(R.layout.activity_aggiungicontatto);
-
-
-        txtNome = (EditText) findViewById(R.id.txtNome);
-        txtCognome = (EditText) findViewById(R.id.txtCognome);
-        linearLayout = (LinearLayout) findViewById(R.id.linearLayout1);
-
-        listView = (ListView) findViewById(R.id.list_view);
-        email = (TextView) findViewById(R.id.email);
-
-        aggiungi = (Button) findViewById(R.id.aggiungi);
-
+        inizializeUI();
 
         final ArrayList<String> arrayListEdit = new ArrayList<>();
         final ArrayList<Utente> listaStudenti = new ArrayList<>();
         final ArrayList<Utente> studentiSelezionati = new ArrayList<>();
         final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayListEdit);
-
-
-        conferma = (Button) findViewById(R.id.btn_conferma);
 
         conferma.setOnClickListener(new View.OnClickListener() {
 
@@ -240,6 +224,23 @@ public class AggiungiContatto extends Activity {
 
             }
         });
+    }
+
+    public void inizializeUI(){
+        mAuth = FirebaseAuth.getInstance();
+
+        setContentView(R.layout.activity_aggiungicontatto);
+
+        txtNome = (EditText) findViewById(R.id.txtNome);
+        txtCognome = (EditText) findViewById(R.id.txtCognome);
+        linearLayout = (LinearLayout) findViewById(R.id.linearLayout1);
+
+        listView = (ListView) findViewById(R.id.list_view);
+        email = (TextView) findViewById(R.id.email);
+
+        aggiungi = (Button) findViewById(R.id.aggiungi);
+
+        conferma = (Button) findViewById(R.id.btn_conferma);
     }
 }
 

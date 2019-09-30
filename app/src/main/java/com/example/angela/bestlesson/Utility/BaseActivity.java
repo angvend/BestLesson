@@ -81,6 +81,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
         actionBarDrawerToggle.syncState();
 
         mAuth = FirebaseAuth.getInstance();
+        //mAuth.getCurrentUser().getProviderData().;
         userInformation = new UserInformation();
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -105,6 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
                         Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT ).show();
 
                         intent = new Intent(getApplicationContext(), BasicActivity.class);
+                        intent.putExtra("tipoUtente", userInformation.getTipo().toString());
                         startActivity(intent);
 
                         break;
