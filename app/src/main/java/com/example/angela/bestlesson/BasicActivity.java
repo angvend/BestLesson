@@ -2,8 +2,6 @@ package com.example.angela.bestlesson;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.example.angela.bestlesson.Utility.BaseActivity;
 import com.example.angela.bestlesson.Utility.WeekViewEvent;
@@ -16,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -27,21 +26,44 @@ import androidx.annotation.NonNull;
  */
 public class BasicActivity extends BaseActivity {
 
+
+    final List<WeekViewEvent> eventi = new ArrayList<WeekViewEvent>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getEventi();
+
+    }
+
     @Override
     public List<? extends WeekViewEvent> onMonthChange(final int newYear, final int newMonth) {
 
 
+        final List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+
+
+        for(int i=0; i < eventi.size(); i++){
+            events.add(eventi.get(i));
+        }
+
+        return events;
+    }
+
+
+    private void getEventi(){
 
         final FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
 
         // Populate the week view with some events.
-        final List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference lezioniRef = rootRef.child("lezioni");
 
+
         final Intent intent;
+
         intent = getIntent();
 
         final String tipoUtente;
@@ -93,7 +115,7 @@ public class BasicActivity extends BaseActivity {
                         String minutoFine1 = minutoFine.substring(minutoFine.lastIndexOf(":") + 1);
 
                         String mese = listaLezioni.get(i).getData();
-                        String mese1 = mese.substring(0, Math.min(mese.length(), 4));
+                        String mese1 = mese.substring(0, Math.min(mese.length(), 5));
                         String mese2 = mese1.substring(mese1.lastIndexOf("/")+1);
 
                         String anno = listaLezioni.get(i).getData();
@@ -115,7 +137,7 @@ public class BasicActivity extends BaseActivity {
                         WeekViewEvent event = new WeekViewEvent(i, getEventTitle(startTime), startTime, endTime);
                         event.setColor(getResources().getColor(R.color.event_color_01));
                         event.setName(listaLezioni.get(i).getStudente());
-                        events.add(event);
+                        eventi.add(event);
 
                     }
                 }
@@ -176,7 +198,7 @@ public class BasicActivity extends BaseActivity {
                         WeekViewEvent event = new WeekViewEvent(i, getEventTitle(startTime), startTime, endTime);
                         event.setColor(getResources().getColor(R.color.event_color_01));
                         event.setName(listaLezioni.get(i).getInsegnante());
-                        events.add(event);
+                        eventi.add(event);
 
                     }
                 }
@@ -196,7 +218,7 @@ public class BasicActivity extends BaseActivity {
         lezioniRef.addListenerForSingleValueEvent(eventListener);
 
 
-        return events;
     }
 
 }
+

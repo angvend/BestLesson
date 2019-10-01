@@ -297,10 +297,24 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
     private String getData(Calendar time){
         int giorno = time.get(Calendar.DATE);
-        int mese = time.get(Calendar.MONTH);
+        int mese = time.get(Calendar.MONTH) + 1;
         int anno = time.get(Calendar.YEAR);
 
-        String date = giorno + "/" + mese + "/" + anno;
+        String giorno1, mese1;
+
+        if(giorno <10){
+            giorno1 = "0" + giorno;
+        }else{
+            giorno1 = String.valueOf(giorno);
+        }
+
+        if(mese <10){
+            mese1 = "0" + mese;
+        }else{
+            mese1 = String.valueOf(mese);
+        }
+
+        String date = giorno1 + "/" + mese1 + "/" + anno;
 
         return date;
     }
