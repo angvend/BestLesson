@@ -1,5 +1,6 @@
 package com.example.angela.bestlesson.Utility;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -7,13 +8,10 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.angela.bestlesson.BasicActivity;
 import com.example.angela.bestlesson.Contatta;
-import com.example.angela.bestlesson.Home;
-import com.example.angela.bestlesson.Login;
 import com.example.angela.bestlesson.Profilo;
 import com.example.angela.bestlesson.R;
 import com.example.angela.bestlesson.SetLezione;
@@ -102,14 +100,6 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
                 int id = menuItem.getItemId();
 
                 switch (id) {
-
-                    case R.id.nav_home:
-                        Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
-
-                        intent = new Intent(getApplicationContext(), Home.class);
-                        startActivity(intent);
-
-                        break;
 
                     case R.id.nav_calendario:
                         Toast.makeText(getApplicationContext(), "Calendario", Toast.LENGTH_SHORT).show();

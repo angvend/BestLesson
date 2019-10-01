@@ -1,6 +1,10 @@
 package com.example.angela.bestlesson;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -30,9 +34,10 @@ import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 public class SetLezione extends AppCompatActivity{
-
 
     private EditText nome;
     private EditText txtNome, txtCognome;
@@ -58,12 +63,15 @@ public class SetLezione extends AppCompatActivity{
 
     private Lezione lezioneDaSalvare;
 
-
     boolean flagColor = false;
 
     private ProgressBar progressBar;
 
     private FirebaseAuth mAuth;
+
+    private NotificationCompat.Builder notBuilder;
+    private static final int MY_NOTIFICATION_ID  = 12345;
+    private static final int MY_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -76,6 +84,8 @@ public class SetLezione extends AppCompatActivity{
         final ArrayList<String> arrayListEdit = new ArrayList<>();
         final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayListEdit);
 
+        this.notBuilder = new NotificationCompat.Builder(this);
+        this.notBuilder.setAutoCancel(true);
 
         conferma.setOnClickListener(new View.OnClickListener() {
 
@@ -220,6 +230,8 @@ public class SetLezione extends AppCompatActivity{
 
             Toast.makeText(getApplicationContext(), "Lezione assegnata con successo!", Toast.LENGTH_SHORT ).show();
 
+            notButtonClicked();
+
             Intent intent = new Intent(getApplicationContext(), BasicActivity.class);
             startActivity(intent);
 
@@ -280,6 +292,26 @@ public class SetLezione extends AppCompatActivity{
     public void hideKeyboard(View v) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
+    public void notButtonClicked(){
+        this.notBuilder.setSmallIcon(R.drawable.book);
+        this.notBuilder.setTicker("Lession_Ticker");
+
+        this.notBuilder.setWhen(System.currentTimeMillis()+10000);
+        this.notBuilder.setContentTitle("Lezione in programma");
+        this.notBuilder.setContentText("Clicca qui");
+
+        Intent intent = new Intent(this, BasicActivity.class);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, MY_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        this.notBuilder.setContentIntent(pendingIntent);
+
+        NotificationManager notificationService = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Notification notification = notBuilder.build();
+        notificationService.notify(MY_NOTIFICATION_ID, notification);
     }
 
     public void inizializeUI(){

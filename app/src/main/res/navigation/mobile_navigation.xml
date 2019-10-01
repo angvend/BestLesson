@@ -6,11 +6,6 @@
     app:startDestination="@+id/nav_home">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:label="@string/menu_home"
-        />
-
-    <fragment
         android:id="@+id/nav_calendario"
         android:label="@string/menu_calendario"
          />
@@ -23,11 +18,6 @@
     <fragment
         android:id="@+id/nav_profilo"
         android:label="@string/menu_profilo" />
-
-    <fragment
-        android:id="@+id/nav_share"
-        android:label="@string/menu_share"
-       />
 
     <fragment
         android:id="@+id/nav_contatta"
