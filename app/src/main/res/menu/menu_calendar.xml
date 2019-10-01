@@ -4,7 +4,6 @@
     tools:context=".MyActivity" >
 
 
-
     <item android:id="@+id/action_today"
         android:title="@string/action_today"
         android:orderInCategory="100"

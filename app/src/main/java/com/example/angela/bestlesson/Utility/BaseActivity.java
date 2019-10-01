@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.angela.bestlesson.BasicActivity;
 import com.example.angela.bestlesson.Contatta;
+import com.example.angela.bestlesson.Home;
 import com.example.angela.bestlesson.Login;
 import com.example.angela.bestlesson.Profilo;
 import com.example.angela.bestlesson.R;
@@ -92,18 +93,26 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        final NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
 
-                switch (id){
+                switch (id) {
 
                     case R.id.nav_home:
-                        Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT ).show();
+                        Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
+
+                        intent = new Intent(getApplicationContext(), Home.class);
+                        startActivity(intent);
+
+                        break;
+
+                    case R.id.nav_calendario:
+                        Toast.makeText(getApplicationContext(), "Calendario", Toast.LENGTH_SHORT).show();
 
                         intent = new Intent(getApplicationContext(), BasicActivity.class);
                         intent.putExtra("tipoUtente", userInformation.getTipo().toString());
@@ -112,7 +121,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
                         break;
 
                     case R.id.nav_rubrica:
-                        Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT ).show();
+                        Toast.makeText(getApplicationContext(), "Rubrica", Toast.LENGTH_SHORT).show();
 
                         intent = new Intent(getApplicationContext(), VisualizzaRubrica.class);
                         intent.putExtra("tipoUtente1", String.valueOf(utente));
@@ -121,7 +130,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
                         break;
 
                     case R.id.nav_profilo:
-                        Toast.makeText(getApplicationContext(), "Profilo", Toast.LENGTH_SHORT ).show();
+                        Toast.makeText(getApplicationContext(), "Profilo", Toast.LENGTH_SHORT).show();
 
                         intent = new Intent(getApplicationContext(), Profilo.class);
                         startActivity(intent);
@@ -129,7 +138,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
                         break;
 
                     case R.id.nav_contatta:
-                        Toast.makeText(getApplicationContext(), "Contatta", Toast.LENGTH_SHORT ).show();
+                        Toast.makeText(getApplicationContext(), "Contatta", Toast.LENGTH_SHORT).show();
                         intent = new Intent(getApplicationContext(), Contatta.class);
                         startActivity(intent);
 
@@ -141,11 +150,8 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
         });
 
 
-
-
 //        toolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
-
 
 
 //        DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -194,7 +200,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         setupDateTimeInterpreter(id == R.id.action_week_view);
-        switch (id){
+        switch (id) {
             case R.id.action_today:
                 mWeekView.goToToday();
                 return true;
@@ -242,6 +248,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
     /**
      * Set up a date time interpreter which will show short date values when in week view and long
      * date values otherwise.
+     *
      * @param shortDate True if the date values should be short.
      */
     private void setupDateTimeInterpreter(final boolean shortDate) {
@@ -268,7 +275,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
     }
 
     protected String getEventTitle(Calendar time) {
-        return String.format("", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
+        return String.format("", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
     }
 
     @Override
@@ -284,7 +291,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
     @Override
     public void onEmptyViewLongPress(Calendar time) {
 
-        if(utente==1) {
+        if (utente == 1) {
 
             Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(BaseActivity.this, SetLezione.class);
@@ -295,7 +302,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
     }
 
-    private String getData(Calendar time){
+    private String getData(Calendar time) {
         int giorno = time.get(Calendar.DATE);
         int mese = time.get(Calendar.MONTH);
         int anno = time.get(Calendar.YEAR);
@@ -311,9 +318,9 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
     private Integer getTipo(DataSnapshot dataSnapshot, String email) {
 
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-            if(ds.child("email").getValue().equals(email)){
+            if (ds.child("email").getValue().equals(email)) {
 
                 String type = ds.child("tipo").getValue().toString();
                 Log.d("AIUTO", email);
@@ -329,7 +336,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
         return tipo;
     }
 
-    private void controlloUtente(){
+    private void controlloUtente() {
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -340,13 +347,13 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
                 Integer studente = 2;
                 Integer insegnante = 1;
 
-                Integer type = getTipo(dataSnapshot,email);
+                Integer type = getTipo(dataSnapshot, email);
 
-                if(type == insegnante){
+                if (type == insegnante) {
                     utente = insegnante;
                 }
 
-                if(type == studente){
+                if (type == studente) {
 
                     utente = studente;
                 }
