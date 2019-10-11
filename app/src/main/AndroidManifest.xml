@@ -28,7 +28,9 @@
         <activity android:name=".Contatta"></activity>
         <activity android:name=".VisualizzaRubrica"></activity>
         <activity android:name=".SetLezione" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".Utility.NotificationActivity" />
 
+        <receiver android:name=".Utility.AlarmReceiver"/>
 
     </application>
 
