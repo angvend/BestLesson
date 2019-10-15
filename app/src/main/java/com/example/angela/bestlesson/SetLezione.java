@@ -67,6 +67,8 @@ public class SetLezione extends AppCompatActivity{
 
     private ProgressBar progressBar;
 
+    private String tipo;
+
     private FirebaseAuth mAuth;
 
     private NotificationCompat.Builder notBuilder;
@@ -119,7 +121,8 @@ public class SetLezione extends AppCompatActivity{
                             nome = ds.child("nome").getValue(String.class);
                             tipo2 = ds.child("tipo").getValue().toString();
                             email = ds.child("email").getValue(String.class);
-                            //idStudente = ds.getKey();
+
+                            tipo = tipo2;
 
                             // if (type == 1) {
                             //  System.out.println(getTipo(dataSnapshot, userID));
@@ -232,7 +235,11 @@ public class SetLezione extends AppCompatActivity{
 
             notButtonClicked();
 
+
+
+
             Intent intent = new Intent(getApplicationContext(), BasicActivity.class);
+            intent.putExtra("tipoUtente", tipo);
             startActivity(intent);
 
         }
