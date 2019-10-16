@@ -146,6 +146,7 @@ public class Login extends AppCompatActivity {
                     Integer insegnante = 1;
 
                     Integer type = getTipo(dataSnapshot,email);
+                    String nome = getNomeUtente(dataSnapshot,email);
 
                     if(type == insegnante){
 
@@ -160,6 +161,7 @@ public class Login extends AppCompatActivity {
 
                         Intent intent = new Intent(Login.this, BasicActivity.class);
                         intent.putExtra("tipoUtente",type.toString());
+                        intent.putExtra("nome", nome);
                         startActivity(intent);
                         progressBar.setVisibility(View.INVISIBLE);
 
@@ -184,8 +186,6 @@ public class Login extends AppCompatActivity {
             if(ds.child("email").getValue().equals(email)){
 
                 String type = ds.child("tipo").getValue().toString();
-                Log.d("AIUTO", email);
-                Log.d("AIUTO", type);
 
                 userInformation.setTipo(Integer.parseInt(type));
             }
@@ -195,5 +195,26 @@ public class Login extends AppCompatActivity {
         tipo = userInformation.getTipo();
 
         return tipo;
+    }
+
+    private String getNomeUtente(DataSnapshot dataSnapshot, String email){
+
+        String utente = "";
+
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
+
+            if(ds.child("email").getValue().equals(email)){
+
+                String nome = ds.child("nome").getValue().toString();
+                String cognome = ds.child("cognome").getValue().toString();
+
+                utente = nome + " " + cognome;
+
+
+            }
+
+        }
+
+        return utente;
     }
 }

@@ -1,7 +1,14 @@
 package com.example.angela.bestlesson;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.example.angela.bestlesson.Utility.BaseActivity;
 import com.example.angela.bestlesson.Utility.WeekViewEvent;
@@ -26,30 +33,33 @@ import androidx.annotation.NonNull;
  */
 public class BasicActivity extends BaseActivity {
 
+    public static Activity fa;
+    public int anno, mese;
 
-    final List<WeekViewEvent> eventi = new ArrayList<WeekViewEvent>();
+
+    List<WeekViewEvent> eventi;
+    List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        fa = this;
         getEventi();
 
+        SystemClock.sleep(750);
+
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(final int newYear, final int newMonth) {
 
-
-        final List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-
-
-        for(int i=0; i < eventi.size(); i++){
-            events.add(eventi.get(i));
-        }
-
         return events;
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
 
     private void getEventi(){
 
@@ -63,7 +73,6 @@ public class BasicActivity extends BaseActivity {
 
 
         final Intent intent;
-
         intent = getIntent();
 
         final String tipoUtente;
@@ -77,6 +86,8 @@ public class BasicActivity extends BaseActivity {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                eventi = new ArrayList<WeekViewEvent>();
 
                 String email;
                 listaLezioni.clear();
@@ -135,21 +146,25 @@ public class BasicActivity extends BaseActivity {
                         endTime.add(Calendar.HOUR, listaLezioni.get(i).getOreDiLezione());
                         endTime.set(Calendar.MONTH, Integer.parseInt(mese2));
                         WeekViewEvent event = new WeekViewEvent(i, getEventTitle(startTime), startTime, endTime);
-                        event.setColor(getResources().getColor(R.color.event_color_01));
-                        event.setName(listaLezioni.get(i).getStudente());
+                        event.setColor(getResources().getColor(R.color.event_color_05));
+                        event.setName(listaLezioni.get(i).getStudente() + "\n"+ listaLezioni.get(i).getOraInizio() + "-" + listaLezioni.get(i).getOraFine() + "\n" + listaLezioni.get(i).getOreDiLezione() + "h");
                         eventi.add(event);
 
                     }
                 }
 
-                if(tipoUtente.equals("2")){
+                if(tipoUtente.equals("2")) {
+
+                    String userEmail = intent.getStringExtra("nome");
 
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         email = ds.child("studente").getValue(String.class);
 
-                        Lezione lezione= new Lezione();
 
-                        if (email.equals(mAuth.getCurrentUser().getEmail())) {
+                        Lezione lezione = new Lezione();
+
+                        if (email.equals(userEmail)) {
+
                             lezione.setInsegnante(ds.child("insegnante").getValue().toString());
                             lezione.setStudente(ds.child("studente").getValue().toString());
                             lezione.setData(ds.child("data").getValue().toString());
@@ -161,7 +176,7 @@ public class BasicActivity extends BaseActivity {
 
                     }
 
-                    for(int i = 0; i < listaLezioni.size(); i++){
+                    for (int i = 0; i < listaLezioni.size(); i++) {
 
                         String oraInizio = listaLezioni.get(i).getOraInizio();
                         String oraInizio1 = oraInizio.substring(0, Math.min(oraInizio.length(), 2));
@@ -176,7 +191,7 @@ public class BasicActivity extends BaseActivity {
                         String minutoFine1 = minutoFine.substring(minutoFine.lastIndexOf(":") + 1);
 
                         String mese = listaLezioni.get(i).getData();
-                        String mese1 = mese.substring(0, Math.min(mese.length(), 4));
+                        String mese1 = mese.substring(0, Math.min(mese.length(), 5));
                         String mese2 = mese1.substring(mese1.lastIndexOf("/")+1);
 
                         String anno = listaLezioni.get(i).getData();
@@ -196,11 +211,16 @@ public class BasicActivity extends BaseActivity {
                         endTime.add(Calendar.HOUR, listaLezioni.get(i).getOreDiLezione());
                         endTime.set(Calendar.MONTH, Integer.parseInt(mese2));
                         WeekViewEvent event = new WeekViewEvent(i, getEventTitle(startTime), startTime, endTime);
-                        event.setColor(getResources().getColor(R.color.event_color_01));
-                        event.setName(listaLezioni.get(i).getInsegnante());
+                        event.setColor(getResources().getColor(R.color.event_color_05));
+                        event.setName(listaLezioni.get(i).getInsegnante() + "\n"+ listaLezioni.get(i).getOraInizio() + "-" + listaLezioni.get(i).getOraFine() + "\n" + listaLezioni.get(i).getOreDiLezione() + "h");
                         eventi.add(event);
 
                     }
+
+                }
+
+                for(int i=0; i < eventi.size(); i++){
+                    events.add(eventi.get(i));
                 }
 
 

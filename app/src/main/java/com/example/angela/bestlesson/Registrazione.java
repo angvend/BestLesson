@@ -148,8 +148,14 @@ public class Registrazione extends AppCompatActivity implements AdapterView.OnIt
 
 
                                         if(utente.getTipo() == 1){
-                                            FirebaseDatabase.getInstance().getReference("utenti")
-                                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("studenti").push().setValue("");
+
+                                            DatabaseReference nuovoStudente = FirebaseDatabase.getInstance().getReference("utenti")
+                                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("studenti").push();
+
+                                            nuovoStudente.child("nome").setValue("------");
+                                            nuovoStudente.child("cognome").setValue("------");
+                                            nuovoStudente.child("tipo").setValue("------");
+                                            nuovoStudente.child("email").setValue("------");
 
                                         }
 

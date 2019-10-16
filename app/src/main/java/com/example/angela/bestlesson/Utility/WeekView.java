@@ -1138,7 +1138,7 @@ public class WeekView extends View {
         List<List<EventRect>> columns = new ArrayList<List<EventRect>>();
         columns.add(new ArrayList<EventRect>());
         for (EventRect eventRect : collisionGroup) {
-            boolean isPlaced = false;
+            boolean isPlaced = true;
             for (List<EventRect> column : columns) {
                 if (column.size() == 0) {
                     column.add(eventRect);

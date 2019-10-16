@@ -72,24 +72,21 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
     Intent intent;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
 
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-        Intent notificationIntent = new Intent(this, AlarmReceiver.class);
-        PendingIntent broadcast = PendingIntent.getBroadcast(this, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND, 5);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
-
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+
+
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -107,6 +104,9 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
 
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
 
@@ -201,6 +201,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -241,7 +242,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
                     // Lets change some dimensions to best fit the view.
                     mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
-                    mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
+                    mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                     mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
                 }
                 return true;
@@ -285,12 +286,12 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, event.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, event.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -298,11 +299,15 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
         if (utente == 1) {
 
-            Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(BaseActivity.this, SetLezione.class);
             String dataCliccata = String.valueOf(getData(time));
             intent.putExtra("dataPassata", dataCliccata);
+
+            intent.putExtra("ora", String.valueOf(time.getTime().getHours()));
+            intent.putExtra("tipoUtente", String.valueOf(utente));
             startActivity(intent);
+            finish();
+            BasicActivity.fa.finish();
         }
 
     }
@@ -342,8 +347,6 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
             if (ds.child("email").getValue().equals(email)) {
 
                 String type = ds.child("tipo").getValue().toString();
-                Log.d("AIUTO", email);
-                Log.d("AIUTO", type);
 
                 userInformation.setTipo(Integer.parseInt(type));
             }

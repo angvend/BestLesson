@@ -1,6 +1,8 @@
 package com.example.angela.bestlesson;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -22,6 +24,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.angela.bestlesson.Utility.AlarmReceiver;
+import com.example.angela.bestlesson.Utility.BaseActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,6 +57,10 @@ public class SetLezione extends AppCompatActivity{
     private String date;
     private String email;
     private String utenteSelezionato;
+    private String tipo;
+
+    private String ora;
+    private Integer ora1;
 
     private Button conferma;
     private Button btn_imposta;
@@ -66,8 +74,6 @@ public class SetLezione extends AppCompatActivity{
     boolean flagColor = false;
 
     private ProgressBar progressBar;
-
-    private String tipo;
 
     private FirebaseAuth mAuth;
 
@@ -83,6 +89,7 @@ public class SetLezione extends AppCompatActivity{
         inizializeUI();
 
         final ArrayList<String> listaStudenti = new ArrayList<>();
+        final ArrayList<String> listaNomi = new ArrayList<>();
         final ArrayList<String> arrayListEdit = new ArrayList<>();
         final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayListEdit);
 
@@ -101,6 +108,7 @@ public class SetLezione extends AppCompatActivity{
                 arrayListEdit.clear();     //cancello l'array temporaneo per stampare a video
                 arrayAdapter.clear();
                 listaStudenti.clear();
+                listaNomi.clear();
 
                 DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference utentiRef = rootRef.child("utenti").child(idUtente).child("studenti");
@@ -109,6 +117,7 @@ public class SetLezione extends AppCompatActivity{
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                         String userID = mAuth.getCurrentUser().getUid();
 
                         String nome, cognome, email, tipo2, idStudente;
@@ -117,12 +126,12 @@ public class SetLezione extends AppCompatActivity{
 
 
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
                             cognome = ds.child("cognome").getValue(String.class);
                             nome = ds.child("nome").getValue(String.class);
                             tipo2 = ds.child("tipo").getValue().toString();
                             email = ds.child("email").getValue(String.class);
-
-                            tipo = tipo2;
+                            //idStudente = ds.getKey();
 
                             // if (type == 1) {
                             //  System.out.println(getTipo(dataSnapshot, userID));
@@ -132,10 +141,9 @@ public class SetLezione extends AppCompatActivity{
                                     arrayListEdit.add(nome + " " + cognome + " (" + email + ")");
 
                                     listaStudenti.add(email); //lista degli studenti
+                                    listaNomi.add(nome + " " + cognome);
 
                                     listView.setAdapter(arrayAdapter);
-
-                                    System.out.println(listaStudenti);
 
                                     flag = true;
 
@@ -145,7 +153,7 @@ public class SetLezione extends AppCompatActivity{
 
                         if(flag == false){
 
-                            Toast.makeText(getApplicationContext(), "Studente non trovato in database!", Toast.LENGTH_SHORT ).show();
+                            Toast.makeText(getApplicationContext(), "Studente non presente nella rubrica!", Toast.LENGTH_SHORT ).show();
                         }
 
                     }
@@ -180,7 +188,7 @@ public class SetLezione extends AppCompatActivity{
                     view.setBackgroundColor(Color.CYAN);
                     flagColor = true;
                     view.setSelected(true);
-                    utenteSelezionato = listaStudenti.get(position);
+                    utenteSelezionato = listaNomi.get(position);
 
                 } else {
                     view.setSelected(false);
@@ -194,11 +202,20 @@ public class SetLezione extends AppCompatActivity{
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent2 = new Intent(this, BasicActivity.class);
+        intent2.putExtra("tipoUtente", tipo);
+        startActivity(intent2);
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onResume() {
         data.setText(date);
         super.onResume();
 
     }
+    @SuppressLint("NewApi")
     private void impostaLezione() {
 
         int oraInizio = inizio.getCurrentHour();
@@ -233,9 +250,18 @@ public class SetLezione extends AppCompatActivity{
 
             Toast.makeText(getApplicationContext(), "Lezione assegnata con successo!", Toast.LENGTH_SHORT ).show();
 
+
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+                Intent notificationIntent = new Intent(this, AlarmReceiver.class);
+
+                PendingIntent broadcast = PendingIntent.getBroadcast(this, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.SECOND, 5);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
+
             notButtonClicked();
-
-
 
 
             Intent intent = new Intent(getApplicationContext(), BasicActivity.class);
@@ -321,6 +347,7 @@ public class SetLezione extends AppCompatActivity{
         notificationService.notify(MY_NOTIFICATION_ID, notification);
     }
 
+    @SuppressLint("NewApi")
     public void inizializeUI(){
         data = (TextView) findViewById(R.id.data);
 
@@ -338,11 +365,23 @@ public class SetLezione extends AppCompatActivity{
 
         inizio = (TimePicker) findViewById(R.id.datePicker1);
         fine = (TimePicker) findViewById(R.id.datePicker2);
+
         inizio.setIs24HourView(true);
         fine.setIs24HourView(true);
 
         intent = getIntent();
         dataPassata = intent.getStringExtra("dataPassata");
+        tipo = intent.getStringExtra("tipoUtente");
+        ora = intent.getStringExtra("ora");
+
+        ora1 = Integer.parseInt(ora);
+
+        inizio.setHour(ora1);
+        inizio.setMinute(0);
+
+        fine.setHour(ora1+1);
+        fine.setMinute(0);
+
         date = dataPassata;
 
         data.setText(date);

@@ -91,15 +91,19 @@ public class VisualizzaRubrica extends Activity {
 
                     if(typeUser.equals("1")){
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            cognome = ds.child("cognome").getValue(String.class);
-                            nome = ds.child("nome").getValue(String.class);
-                            email = ds.child("email").getValue(String.class);
+
+                                cognome = ds.child("cognome").getValue(String.class);
+                                nome = ds.child("nome").getValue(String.class);
+                                email = ds.child("email").getValue(String.class);
 
 
-                            arrayListEdit.add(nome + " " + cognome);
-                            listaEmail.add(email);
+                            if(!nome.equals("------")) {
 
-                            listView.setAdapter(arrayAdapter);
+                                arrayListEdit.add(nome + " " + cognome);
+                                listaEmail.add(email);
+
+                                listView.setAdapter(arrayAdapter);
+                            }
 
                         }
                     }
