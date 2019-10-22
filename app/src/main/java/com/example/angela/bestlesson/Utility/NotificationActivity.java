@@ -6,14 +6,20 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.angela.bestlesson.BasicActivity;
 import com.example.angela.bestlesson.R;
 
 
 public class NotificationActivity extends Activity {
 
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        intent = new Intent(getApplicationContext(), BasicActivity.class);
+        startActivity(intent);
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.notification_activity);
     }
 }

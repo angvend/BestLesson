@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Clicca su uno studente per contattarlo!"
+            android:text="Clicca su un contatto per scrivergli!"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="15dp"

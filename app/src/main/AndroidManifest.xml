@@ -19,7 +19,6 @@
         </activity>
         <activity android:name=".Registrazione"></activity>
         <activity android:name=".OrganizzaCalendario"></activity>
-        <activity android:name=".VisualizzaCalendario"></activity>
         <activity android:name=".RecuperaPassword" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity android:name=".BasicActivity"></activity>
         <activity android:name=".Utility.BaseActivity"></activity>

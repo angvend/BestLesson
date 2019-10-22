@@ -72,6 +72,8 @@ public class BasicActivity extends BaseActivity {
 
         // Populate the week view with some events.
 
+
+
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference lezioniRef = rootRef.child("lezioni");
 
