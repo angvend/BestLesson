@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/ic_person"
-                android:text="2110luca1@gmail.com"
+                android:hint="anna.valli@gmail.com"
                 android:inputType="textEmailAddress"
                 android:padding="10dp" />
 
@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/ic_vpn_key_black_24dp"
-                android:text="12345678"
+                android:hint="********"
                 android:inputType="textPassword"
                 android:padding="10dp" />
 
