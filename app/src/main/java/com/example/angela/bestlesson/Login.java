@@ -1,6 +1,8 @@
 package com.example.angela.bestlesson;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -44,6 +46,9 @@ public class Login extends AppCompatActivity {
     private UserInformation userInformation;
 
     private FirebaseAuth mAuth;
+
+    SharedPreferences sharedpreferences;
+    public static final String MyPREFERENCES = "MyPrefs" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +136,8 @@ public class Login extends AppCompatActivity {
         loginBtn = findViewById(R.id.btn_login);
         registraBtn = findViewById(R.id.btn_registra);
         passwordDimenticataBtn = findViewById(R.id.btn_password_dimenticata);
+
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         //progressBar = findViewById(R.id.progressBar);
     }
 
@@ -150,8 +157,12 @@ public class Login extends AppCompatActivity {
 
                     if(type == insegnante){
 
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString("tipo", String.valueOf(type));
+                        editor.putString("nome", nome);
+                        editor.apply();
+
                         Intent intent = new Intent(Login.this, BasicActivity.class);
-                        intent.putExtra("tipoUtente",type.toString());
                         startActivity(intent);
                         progressBar.setVisibility(View.INVISIBLE);
 
@@ -159,9 +170,12 @@ public class Login extends AppCompatActivity {
 
                     if(type == studente){
 
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString("tipo", String.valueOf(type));
+                        editor.putString("nome", nome);
+                        editor.apply();
+
                         Intent intent = new Intent(Login.this, BasicActivity.class);
-                        intent.putExtra("tipoUtente",type.toString());
-                        intent.putExtra("nome", nome);
                         startActivity(intent);
                         progressBar.setVisibility(View.INVISIBLE);
 

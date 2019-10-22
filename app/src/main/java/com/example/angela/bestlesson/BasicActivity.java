@@ -35,10 +35,14 @@ public class BasicActivity extends BaseActivity {
 
     public static Activity fa;
     public int anno, mese;
+    public static final String MyPREFERENCES = "MyPrefs" ;
 
 
     List<WeekViewEvent> eventi;
     List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+
+
+    SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +75,10 @@ public class BasicActivity extends BaseActivity {
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference lezioniRef = rootRef.child("lezioni");
 
-
-        final Intent intent;
-        intent = getIntent();
+        final SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         final String tipoUtente;
-        tipoUtente = intent.getStringExtra("tipoUtente");
+        tipoUtente = sharedpreferences.getString("tipo","");
 
 
         final ArrayList<Lezione> listaLezioni = new ArrayList<>();
@@ -155,7 +157,7 @@ public class BasicActivity extends BaseActivity {
 
                 if(tipoUtente.equals("2")) {
 
-                    String userEmail = intent.getStringExtra("nome");
+                    String userEmail = sharedpreferences.getString("nome", "");
 
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         email = ds.child("studente").getValue(String.class);
