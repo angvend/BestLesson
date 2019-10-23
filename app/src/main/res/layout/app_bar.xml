@@ -14,16 +14,16 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
     </com.google.android.material.appbar.AppBarLayout>
-    <include layout="@layout/content_main2" />
+<!--    <include layout="@layout/content_main2" />-->
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/appbar_color"
-        app:layout_anchor="@+id/appBarLayout"
-        app:layout_anchorGravity="center"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:title="" />
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?attr/actionBarSize"-->
+<!--        android:background="@drawable/appbar_color"-->
+<!--        app:layout_anchor="@+id/appBarLayout"-->
+<!--        app:layout_anchorGravity="center"-->
+<!--        app:popupTheme="@style/AppTheme.PopupOverlay"-->
+<!--        app:title="" /> -->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

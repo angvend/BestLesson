@@ -1,6 +1,7 @@
 package com.example.angela.bestlesson;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -205,6 +206,8 @@ public class AggiungiContatto extends Activity {
                             if(presente == false){
                                 FirebaseDatabase.getInstance().getReference("utenti")
                                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("studenti").push().setValue(studentiSelezionati.get(j));
+
+
                             }else{
                                 Toast.makeText(getApplicationContext(), studentiSelezionati.get(j).getEmail() + " già presente in database", Toast.LENGTH_SHORT ).show();
                             }
@@ -220,7 +223,6 @@ public class AggiungiContatto extends Activity {
 
                     studentiRef.addListenerForSingleValueEvent(eventListener);
                 }
-
 
             }
         });

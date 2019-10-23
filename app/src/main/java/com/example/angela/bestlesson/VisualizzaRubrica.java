@@ -2,7 +2,9 @@ package com.example.angela.bestlesson;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +43,10 @@ public class VisualizzaRubrica extends Activity {
 
     private DatabaseReference rootRef;
     private DatabaseReference utentiRef;
+
+
+    SharedPreferences sharedpreferences;
+    public static final String MyPREFERENCES = "MyPrefs" ;
 
     private Utente utente;
 
@@ -163,13 +169,15 @@ public class VisualizzaRubrica extends Activity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         listView = (ListView) findViewById(R.id.lista);
 
         userID = mAuth.getCurrentUser().getUid();
 
-        intent = getIntent();
-        typeUser = intent.getStringExtra("tipoUtente1");
+        final String tipoUtente;
+        typeUser = sharedpreferences.getString("tipo","");
 
         rootRef = FirebaseDatabase.getInstance().getReference();
         utentiRef = rootRef.child("utenti");
